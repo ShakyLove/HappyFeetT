@@ -1,0 +1,73 @@
+body{
+    background-color: rgb(221, 236, 236);
+    background: linear-gradient(to right, rgb(201, 201, 201),rgb(255, 255, 255));
+}
+.bg{
+    background-image: url(../../img/login/zapatos2.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.ingresa input[type="submit"]{
+    background: rgb(42, 141, 134);
+    border: white;
+}
+.ingresa input[type="submit"]{
+    font-family: 'Baloo 2';
+}
+.ingresa input:hover[type="submit"]{
+    background: white;
+    border: 1px solid rgb(45, 163, 157);
+    color: rgb(43, 49, 49);
+}
+.link span{
+    font-family: 'Baloo 2';
+}
+.link span a{
+    color:rgb(30, 150, 150);
+    font-family: 'Baloo 2';
+}
+.link span a:hover{
+    color: rgb(42, 141, 134);
+}
+.link a{
+    color: rgb(43, 49, 49);
+    text-decoration: none;
+    font-family: 'Baloo 2';
+}
+.link a:hover{
+    color: rgb(42, 141, 134);
+}
+.box-form img{
+    border-radius: 50%;
+    margin-top: 40px;
+}
+.box-form h2{
+    font-family: 'Baloo 2';
+    margin-top: 10px;
+}
+form label{
+    font-family: 'Baloo 2';
+}
+.box-form h4{
+    font-size: 0.9rem;
+    font-family: 'Handlee';
+}
+.con{
+    background: white;
+}
+.sec p{
+    font-family: 'Baloo 2';
+}
+#cambio{
+    margin-top: 100px;
+}
+.col form .boton a{
+    background: white;
+    border: 1px solid rgb(45, 163, 157);
+    color: rgb(43, 49, 49);
+    font-family: 'Baloo 2';
+}
+.col form .boton a:hover{
+    background: rgb(43, 49, 49);
+    color: white;
+}

@@ -1,0 +1,505 @@
+@import url(../fonts/GothamBook.css);
+@import url(../fonts/GothamBold.css);
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body{
+	background: #ededed;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Handlee';
+    letter-spacing: 1px;
+}
+h1{
+	font-size: 20px;
+	margin-left: auto;
+}
+h2{
+	font-size: 20px;
+}
+h3{
+	font-size: 18px;
+}
+h4{
+	font-size: 16px;
+}
+h5{
+	font-size: 14px;
+}
+h6{
+	font-size: 12px;
+}
+p{
+	font-family: 'arial';
+	letter-spacing: 2px;
+	font-size: 14px;
+	line-height: 20px;
+}
+a{
+	text-decoration: none;
+	font-family: arial;
+	letter-spacing: 1px;
+}
+span {
+    font-family: 'GothamBook';
+    letter-spacing: 1px;
+    font-size: 14px;
+    line-height: 20px;
+}
+header{
+	position: fixed;
+	width: 100%;
+}
+.header{
+	color: #FFF;
+	background: #093a46;
+	height: 50px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px;
+}
+.optionsBar{
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.optionsBar span {
+    color: #FFF;
+    font-size: 11pt;
+    font-family: 'GothamBook';
+    margin-left: 30px;
+}
+.photouser {
+    margin-left: 30px;
+    width: 25px;
+    height: 25px;
+}
+.photouser2 {
+    margin-left: 0;
+    width: 40px;
+    height: 40px;
+	border-radius: 50%;
+}
+.close{
+	width: 25px;
+    height: 25px;
+}
+.optionsBar a {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    margin-left: 30px;
+}
+nav ul{
+	background: #1c8fa3;
+	list-style: none;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+nav ul > li a{
+	position: relative;
+}
+nav a{
+	color: #FFF;
+	display: block;
+	font-size: 10pt;
+	font-family: 'GothamBook';
+	padding: 15px 30px;
+	letter-spacing: 2px;
+	transition: background .5s;
+}
+nav .principal > a{
+    background: url(../images/arrow_bottom.png) no-repeat;
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-size: auto auto;
+    background-position: 94% center;
+    background-size: 10px;
+}
+nav ul li:hover ul{
+	display: block;
+}
+nav li ul{
+	/*background: #177470;*/
+	background: #1c8fa3;
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	align-items: flex-start;
+	border-radius: 0 0 10px 10px;
+}
+nav li ul a{
+	position: relative;
+	padding: 10px 30px;
+	border-right: initial;
+}
+nav li ul a:hover{
+	/*background: #2c9595;*/
+	background: #093a46;
+}
+nav li ul li:last-child{
+	border-radius: 0 0 10px 10px;
+	overflow: hidden;
+}
+#container{
+	padding: 90px 15px 15px;
+	height: 100%;
+}
+/*******************    FORMULARIO USUARIO  **********************************************/
+section .form_register{
+	width: 450px;
+	margin: auto;
+	margin-top: 10px;
+}
+section .form_register h1{
+	color: #1c8fa3;
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Baloo 2';
+}
+hr{
+	border: 0;
+	background: #CCC;
+	height: 1px;
+	margin: 10px 0;
+	display: block;
+}
+form{
+	background: white;
+	margin: auto;
+	padding: 20px 50px;
+	border: 1px solid #d1d1d1;
+}
+label{
+	display: block;
+	font-size: 18px;
+	font-family: 'Baloo 2';
+	margin: 15px auto 5px auto;
+}
+input,select{
+	display: block;
+	width: 100%;
+	height: 35px;
+	font-size: 14px;
+	padding: 5px;
+	border: 1px solid #85929d;
+	border-radius: 5px;
+}
+.notItemOne option:first-child{
+	display: none;
+}
+.btn-save{
+	font-size: 12pt;
+	background: #1c8fa3;
+	padding: 10px;
+	color: white;
+	letter-spacing: 1px;
+	border: 0;
+	cursor: pointer;
+	margin: 15px auto;
+}
+.btn-save:hover{
+	background: #093a46;
+	color: white;
+	border: 0;
+}
+.alert{
+	width: 90%;
+	background: #85929d;
+	border-radius: 10px;
+	margin: 20px auto;
+	text-align: center;
+}
+.msg_error{
+	background: #df4759;
+	color: white;
+	transition: 3s;
+}
+.msg_save{
+	background: #42ba96;
+	color: white;
+}
+.alert p{
+	padding: 10px;
+}
+/******************* lISTA USUARIOS ****************************/
+.tabla-usuario{
+	margin-top: 10px;
+}
+.tabla-usuario h1{
+	color: #1c8fa3;
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Baloo 2';
+}
+.tabla-usuario .botones{
+	display: flex;
+	justify-content: center;
+}
+.botones-2{
+	width: 90%;
+}
+.tabla-usuario .btn-nuevo{
+	display: inline-block;
+	background: #1c8fa3;
+	color: white;
+	border-radius: 4px;
+	margin: 5px;
+	padding: 5px 25px;
+	font-family: 'Baloo 2';
+}
+.tabla-usuario .btn-info{
+	display: inline-block;
+	background: #df4759;
+	color: white;
+	border-radius: 4px;
+	margin: 5px;
+	padding: 5px 25px;
+	font-family: 'Baloo 2';
+}
+.tabla-usuario .btn-nuevo:hover{
+	background: #093a46;
+	color: white;
+	border: 0;
+}
+.tabla-usuario .btn-info:hover{
+	background: #bd2133;
+	color: white;
+	border: 0;
+}
+.table{
+	display: flex;
+	justify-content: center;
+}
+table{
+	border-collapse: collapse;
+	font-size: 12pt;
+	width: 90%;
+	justify-content: center;
+}
+th{
+	font-family: 'Baloo 2';
+	text-align: start;
+	padding: 10px;
+	background: rgb(94, 94, 94);
+	color: white;
+}
+table tr:nth-child(odd){
+	background: white;
+}
+table .rol-1 td{
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 8px;
+}
+table .rol-2 td{
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 18px;
+}
+.link_edit{
+	display: inline-block;
+	background: #0BA9B6;
+	color: white;
+	border-radius: 6px;
+	padding: 12px;
+}
+.link_delete{
+	display: inline-block;
+	background: #df4759;
+	color: white;
+	border-radius: 6px;
+	padding: 12px;
+}
+/******************* FORM DELETE ****************************/
+.container-delete{
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+.data-delete{
+	text-align: center;
+	margin-top: 20px;
+	width: 60%;
+	height: 380px;
+	background: white;
+}
+.data-delete h2{
+	margin-top: 20px;
+	color: #1c8fa3;
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Baloo 2';
+}
+.data-delete p{
+	font-family: 'Baloo 2';
+	font-size: 20px;
+	margin: 5px;
+	margin-top: 10px;
+}
+.data-delete span{
+	color: #1c8fa3;
+	font-size: 18px;
+	font-weight: bold;
+}
+.btn-cancel, .btn-ok{
+	width: 100px;
+	background: #1c8fa3;
+	color: white;
+	display: inline-block;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 10px;
+	font-family: 'Baloo 2';
+}
+.btn-ok:hover{
+	background: #093a46;
+	color: white;
+	border: 0;
+}
+.btn-cancel{
+	background: #df4759;
+}
+.btn-cancel:hover{
+	background: black;
+	color: white;
+}
+.row-delete{
+	display: flex;
+	justify-content: center;
+}
+.datos-delete{
+	border-radius: 10px;
+	border: 1px solid #093a46;
+	background: white;
+	width: 50%;
+}
+.datos-delete form{
+	background: initial;
+	border: none;
+}
+.datos-delete img{
+	width: 45px;
+	margin-top: 10px;
+}
+/******************* PAGINADOR ****************************/
+.paginador_pr{
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 10px;
+}
+.paginador{
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	border: none;
+	background: #FFF;
+}
+.paginador ul{
+	padding: 0;
+	list-style: none;
+	background: #FFF;
+	margin-top: 0;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: inline-flex;
+}
+.paginador a, .pageSelected{
+	color: rgb(0, 0, 0);
+	border: none;
+	display: inline-block;
+	font-size: 20;
+	text-align: center;
+	width: 35px;
+	margin: 1px;
+	padding: 5px;
+	font-family: 'Baloo 2';
+}
+.paginador a:hover{
+	background: #1c8fa3;
+	color: white;
+	border: none;
+}
+.pageSelected{
+	color: white;
+	background: #1c8fa3;
+}
+/******************* BUSCADOR ****************************/
+.buscador{
+	background: initial;
+}
+.form-search{
+	display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+	float: right;
+	background: #ededed;
+	padding: 0;
+	width: 40%;
+	margin: 5px;
+	border: none;
+}
+.form-search .btn-search{
+	background: #1c8fa3;
+	color: white;
+	padding: 0 20px;
+	border: 0;
+	cursor: pointer;
+	width: 20%;
+	margin-left: 5px;
+	display: inline-block;
+	font-family: 'Baloo 2';
+}
+.form-search .barra-search{
+	background: rgb(255, 255, 255);
+	font-family: 'Baloo 2';
+}
+/******************* INICIO ****************************/
+/**.cards-1{
+	width: 80%;
+	height: 100%;
+	position: fixed;
+	left: 10%;
+}
+.cards-2{
+	background: orangered;
+	width: 10%;
+	height: 100%;
+	position: fixed;
+}
+.cards-3{
+	background: #bd2133;
+	width: 10%;
+	height: 100%;
+	position: fixed;
+	left: 90%;
+}
+.prin{
+	background: yellowgreen;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}**/
