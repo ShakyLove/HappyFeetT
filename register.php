@@ -1,13 +1,24 @@
 <?php 
 
-    include "../copia/bd/conn.php";
+    include "./bd/conn.php";
 
     if(!empty($_POST)){
 
+        $valida = '';
         if(empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['usuario']) || empty($_POST['contraseña'])){
 
             $_SESSION['message'] = 'Por favor digite los campos';
             $_SESSION['message_type'] = 'danger';
+        }elseif(strlen($_POST['nombre']) <= 5  || is_numeric($_POST['nombre'])){
+
+            $_SESSION['message'] = 'El nombre es incorrecto';
+            $_SESSION['message_type'] = 'danger';
+            $valida = 'border: 1px solid red';
+        }elseif(!filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL)){
+
+            $_SESSION['message'] = 'El correo es incorrecto';
+            $_SESSION['message_type'] = 'danger';
+            $valida = 'border: 1px solid red';
         }else{
 
             $nombre = $_POST['nombre'];
@@ -28,9 +39,9 @@
 
                 if($query_insert){
                     
+                    header('location: login.php');
                     $_SESSION['message'] = 'Cuenta creada con exito';
                     $_SESSION['message_type'] = 'success';
-                    header('location: login.php');
                 }else{
 
                     $_SESSION['message'] = 'Error al crear usuario, intente de nuevo';
@@ -73,19 +84,19 @@
                 <form action="" method="POST" >
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" autofocus>
+                        <input style="<?php echo $valida; ?>" type="text" class="form-control" name="nombre" autofocus value="<?php if(isset($_POST['nombre'])) echo $_POST['nombre']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="correo" autofocus>
+                        <input type="email" class="form-control" name="correo" autofocus value="<?php if(isset($_POST['correo'])) echo $_POST['correo']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="user" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" name="usuario" autofocus>
+                        <input type="text" class="form-control" name="usuario" autofocus value="<?php if(isset($_POST['usuario'])) echo $_POST['usuario']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" name="contraseña">
+                        <input type="password" class="form-control" name="contraseña" value="<?php if(isset($_POST['contraseña'])) echo $_POST['contraseña']; ?>">
                     </div>
                     <div class="d-grid col-md-8 ingresa mx-auto mb-2">
                         <input type="submit" class="btn btn-primary" value="Registrarse" name="registrar">

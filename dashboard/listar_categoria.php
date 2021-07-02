@@ -2,62 +2,70 @@
         session_start();
 
     include "../bd/conn.php";
+    
+    if(!empty($_POST)){
+
+        $alert = '';
+        if(empty($_POST['nombre'])){
+
+            $alert = '<p class="msg_error">Llenar el campo</p>';
+        }else{
+
+            $nombre = $_POST['nombre'];
+            $usuario = $_SESSION['codigo'];
+
+            $query_insert = mysqli_query($conn, "INSERT INTO categorias(descripcion, usuario_id) VALUES('$nombre', '$usuario')");
+
+            if($query_insert ){
+
+                $alert = '<p class="msg_save">Categoria agregada</p>';
+                
+            }else{
+
+                $alert = '<p class="msg_error">Error al guardar el categoria</p>';
+            }
+        }
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<?php include "includes/scripts.php"; ?>
-	<title>Lista de Usuarios</title>
+	<title>Lista de Categorias</title>
 </head>
 <body>
 	<?php include "includes/header.php" ?>
     <section id="container">
-        <div class="tabla-usuario">
-            <h1><i class="fas fa-users"></i> Lista de Usuarios</h1>
-            <div class="botones">
-                <div class="botones-2">
-                    <?php 
-                    if($_SESSION['rol'] != 1){ ?>
-                    <a href="pdf_usuario.php" class="btn-info">Exportar PDF <i class="fas fa-file-pdf"></i></a>
-                        <form action="buscar_usuario.php" method="get" class="form-search">
+    <div class="cont-categoria" style="display: flex; width: 100%; height: 100%; justify-content: center;">
+    
+        <div class="tabla-usuario" style="width: 60%; margin-top: 30px">
+            <h1><i class="fas fa-clipboard-check"></i> Lista de Categoria</h1>
+            <div class="botones" style="width: 95%; justify-content: flex-end;">
+                <div class="botones-2" style="width: 50%; ">
+                        <form action="buscar_entrada.php" method="get" class="form-search" style="width: 100%;">
                             <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
                             <input type="submit" value="Buscar" class="btn-search">
                         </form>
-                    <?php }else{ ?>
-                    <a href="registro_usuario.php" class="btn-nuevo"><i class="fas fa-user-plus"></i> Crear Usuario</a>
-                    <a href="pdf_usuario.php" class="btn-info">Exportar PDF <i class="fas fa-file-pdf"></i></a>
-                        <form action="buscar_usuario.php" method="get" class="form-search">
-                            <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
-                            <input type="submit" value="Buscar" class="btn-search">
-                        </form>
-                    <?php } ?>
                 </div>
             </div>
             <div class="table">
                 <table>
                     <tr>
-                        <th>Id Usuario</th>
-                        <th>Nombre</th>
-                        <th>Correo Electronico</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Rol</th>
-                        <?php 
-                            if($_SESSION['rol'] != 1){
-
-                            }else{
-                        ?>
-                        <th>Acciones</th>
-                        <?php } ?>
+                        <th style="text-align: center; width: 10%;">ID</th>
+                        <th style="width: 50%;">Descripción</th>
+                        <th style="width: 20%;">Usuario</th>
+                        <th style="text-align: center; width: 20%">Acciones</th>
                     </tr>
                     <?php
 
                         //paginador
-                        $sql_registe = mysqli_query($conn, "SELECT COUNT(*) as total_registro FROM usuarios WHERE estatus = 1");
+                        $sql_registe = mysqli_query($conn, "SELECT COUNT(*) as total_registro FROM categorias WHERE estatus = 1");
                         $row_registe = mysqli_fetch_array($sql_registe);
                         $total_registro = $row_registe['total_registro'];
 
-                        $por_pagina = 6;
+                        $por_pagina = 6 ;
 
                         if(empty($_GET['pagina'])){
                             $pagina = 1;
@@ -68,12 +76,10 @@
                         $desde = ($pagina - 1 ) * $por_pagina;
                         $total_paginas = ceil($total_registro / $por_pagina);
 
-                        $query = mysqli_query($conn, "SELECT u.codigo, u.nombre, u.correo, u.usuario, r.rol 
-                                                            FROM usuarios u 
-                                                            INNER JOIN rol r ON u.rol = r.id_rol 
-                                                            WHERE estatus = 1 
-                                                            ORDER BY u.codigo ASC
-                                                            LIMIT $desde, $por_pagina");
+                        $query = mysqli_query($conn, "SELECT c.categoria_id, c.descripcion, u.usuario 
+                        FROM categorias c INNER JOIN usuarios u ON c.usuario_id = u.codigo 
+                        WHERE c.estatus = 1
+                        ORDER BY c.categoria_id ASC LIMIT $desde, $por_pagina");
 
                         mysqli_close($conn);
 
@@ -81,41 +87,28 @@
                         if($resltado > 0){
 
                             while($row = mysqli_fetch_array($query)){
+
+                                $nombre_c = $row['descripcion'];
+
                     ?>
                             <?php 
                             $clase = 0;
                             if($_SESSION['rol'] == 1){ 
                                 $clase = 1;
                             }else{ 
-                                $clase = 2;
+                                $clase = 1;
                             } 
                             ?>
                                 <tr class="rol-<?php echo $clase ?>">
-                                <td><?php echo $row['codigo']; ?></td>
-                                <td><?php echo $row['nombre']; ?></td>
-                                <td><?php echo $row['correo']; ?></td>
+                                <td style="text-align: center;"><?php echo $row['categoria_id']; ?></td>
+                                <td><?php echo $row['descripcion']; ?></td>
                                 <td><?php echo $row['usuario']; ?></td>
-                                <?php if(!$row['rol']){
-                                    ?>
-                                    <td><?php echo "DEFINIR"; ?></td>
-                                <?php
-                                }else{
-                                ?>
-                                    <td><?php echo $row['rol'] ?></td>
-                                <?php
-                                }
-                                ?>
-                                <?php if($_SESSION['rol'] != 1){ 
-                                    
-                                }else{?>
-                                <td class="acc">
-                                    <a class="link_edit" href="editar_usuario.php?codigo=<?php echo $row['codigo']; ?>">
+                                <td style="text-align: center;" class="acc">
+                                    <a class="link_edit" href="editar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                <?php if($row['codigo'] != 1){  ?>
-
-                                    <a class="link_delete" href="eliminar_usuario.php?codigo=<?php echo $row['codigo']; ?>">
+                                    <a class="link_delete" href="eliminar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 <?php } ?>
@@ -123,8 +116,8 @@
                                 <?php } ?>
                             </tr>
                     <?php
-                            }
-                        }
+                            
+                        
                     ?>
                 </table>
             </div>
@@ -158,6 +151,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="form_register" style="margin-top: 30px;">
+            <h1> Agregar Categoria</h1>
+            <hr>
+            <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
+            <form action="" method="POST">
+
+                <label for="nombre">Categoria</label>
+                <input type="text" name="nombre" placeholder="Tipo de categoria" id="nombre">
+
+                <input type="submit" class="btn-save" value="Agregar Categoria">
+            </form>
+        </div>
+    </div>
     </section>
 </body>
 </html>

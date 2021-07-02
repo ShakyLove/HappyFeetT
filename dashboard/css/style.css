@@ -14,7 +14,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1{
 	font-size: 20px;
-	margin-left: auto;
+	margin-right: auto;
 }
 h2{
 	font-size: 20px;
@@ -90,6 +90,7 @@ header{
     width: 40px;
     height: 40px;
 	border-radius: 50%;
+	margin: 5px;
 }
 .close{
 	width: 25px;
@@ -122,8 +123,8 @@ nav a{
 	display: block;
 	font-size: 10pt;
 	font-family: 'GothamBook';
-	padding: 15px 30px;
-	letter-spacing: 2px;
+	padding: 18px 30px;
+	letter-spacing: 1px;
 	transition: background .5s;
 }
 nav .principal > a{
@@ -320,6 +321,13 @@ table .rol-2 td{
 	border-radius: 6px;
 	padding: 12px;
 }
+.link_add{
+	display: inline-block;
+	background: #0bb660;
+	color: white;
+	border-radius: 6px;
+	padding: 12px;
+}
 .link_delete{
 	display: inline-block;
 	background: #df4759;
@@ -337,7 +345,7 @@ table .rol-2 td{
 	text-align: center;
 	margin-top: 20px;
 	width: 60%;
-	height: 380px;
+	height: auto;
 	background: white;
 }
 .data-delete h2{
@@ -503,3 +511,141 @@ table .rol-2 td{
 	margin: 0;
 	padding: 0;
 }**/
+/**********************FOTO*******************/
+.prevPhoto {
+    display: flex;
+    justify-content: space-between;
+    width: 160px;
+    height: 150px;
+    border: 1px solid #CCC;
+    position: relative;
+    cursor: pointer;
+    background: url(../images/uploads/user.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    margin: auto;
+}
+.prevPhoto label{
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+.prevPhoto img{
+	width: 100%;
+	height: 100%;
+}
+.upimg, .notBlock{
+	display: none !important;
+}
+.errorArchivo{
+	font-size: 16px;
+	font-family: arial;
+	color: #cc0000;
+	text-align: center;
+	font-weight: bold; 
+	margin-top: 10px;
+}
+.delPhoto{
+	color: #FFF;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	background: red;
+	position: absolute;
+	right: -10px;
+	top: -10px;
+	z-index: 10;
+}
+#tbl_list_productos img{
+	width: 50px;
+}
+.imgProductoDelete{
+	width: 175px;
+}
+/*********************FOTO********************/
+.titulo-pro{
+	text-align: center;
+}
+.imagen-pro{
+	display: flex;
+	justify-content: center;
+}
+/****************MODLA**************************/
+.modal{
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	background: rgba(37, 37, 37, 0.85);
+	display: none;
+}
+.bodyModal{
+	width: 100%;
+	height: 100%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+}
+.bodyModal form h1{
+	color: #1c8fa3;
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Baloo 2';
+}
+.bodyModal form h2{
+	color: #000000;
+	text-align: center;
+	font-size: 20px;
+	font-family: 'Baloo 2';
+	margin-top: 20px;
+}
+.btn-add{
+	color: white;
+	background: #1c8fa3;
+	width: 130px;
+	padding: 10px;
+	margin: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	font-family: 'Baloo 2';
+	cursor: pointer;
+}
+.btn-addC{
+	color: white;
+	background: #df4759;
+	width: 130px;
+	padding: 10px;
+	margin: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	font-family: 'Baloo 2';
+}
+.btn-addC:hover{
+	color: white;
+	background: rgb(49, 48, 48);
+}
+.btn-add:hover{
+	color: white;
+	background: #0b3a42;
+}
+.closeForm:hover{
+	background: black;
+	color: white;
+}

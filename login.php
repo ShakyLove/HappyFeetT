@@ -17,7 +17,8 @@ if(!empty($_SESSION['active'])){
             $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
             $contraseña = md5(mysqli_real_escape_string($conn, $_POST['contraseña']));
 
-            $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE usuario = '$usuario' AND contraseña = '$contraseña'");
+            $query = mysqli_query($conn, "SELECT u.codigo, u.usuario, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
+                                                        WHERE (u.usuario = '$usuario' AND u.contraseña = '$contraseña') AND estatus = 1");
             mysqli_close($conn);
             $resultado = mysqli_num_rows($query);
 
@@ -30,7 +31,8 @@ if(!empty($_SESSION['active'])){
                 $_SESSION['correo'] = $row['correo'];
                 $_SESSION['user']   = $row['usuario'];
                 $_SESSION['pass']   = $row['contraseña'];
-                $_SESSION['rol']    = $row['rol'];
+                $_SESSION['rol']    = $row['id_rol'];
+                $_SESSION['namerol'] = $row['rol'];
 
                 header('location: dashboard/');
             }else{

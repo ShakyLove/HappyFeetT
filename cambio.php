@@ -1,4 +1,4 @@
-<?php include("../copia/bd/conn.php") ?>
+<?php include("./bd/conn.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

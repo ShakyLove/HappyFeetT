@@ -53,7 +53,7 @@
 	<?php include "includes/header.php" ?>
     <section id="container">
         <div class="form_register">
-            <h1>Registro usuario</h1>
+            <h1><i class="fas fa-user-plus"></i> Registro usuario</h1>
             <hr>
             <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
             <form action="" method="POST">
@@ -76,6 +76,8 @@
                 </select>
 
                 <input type="submit" class="btn-save" value="Crear Usuario">
+                <a href="listar_usuarios.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                border-radius: 5px; background: #df4759; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
     </section>

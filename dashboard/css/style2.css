@@ -5,14 +5,19 @@
 	justify-content: flex-start;
 }
 .inicio1{
-	width: 60%;
+	width: 55%;
 	height: 100%;
 	margin-top: 20px;
 }
 .inicio2{
-	width: 40%;
+	width: 25%;
 	height: 100%;
 	margin-top: 20px;
+}
+.inicio3{
+	width: 20%;
+	height: 100%;
+	margin-top: 30px;
 }
 .welcome-1 h1{
 	color: #1c8fa3;
@@ -67,8 +72,8 @@
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
 }
 .cont-card .card img{
-	width: 180px;
-    height: 160px;
+	width: 190px;
+    height: 170px;
 }
 .cont-card .card h4{
 	font-family: 'Baloo 2';
@@ -101,7 +106,7 @@
 	font-family: 'Baloo 2';
 	text-align: center;
 	padding: 3px;
-	background: rgb(94, 94, 94);
+	background: rgb(26, 133, 165);
 	color: white;
 }
 .tabla-usuario td{
@@ -112,7 +117,7 @@
 }
 /********************************/
 .tabla2{
-    width: 60%;
+    width: 80%;
 }
 .card3 .tabla2 h1{
 	font-family: 'Baloo 2';
@@ -129,8 +134,8 @@
 .tabla-usuario1 th{
 	font-family: 'Baloo 2';
 	text-align: start;
-	background: rgb(82, 42, 177);
-	color: white;
+	background: rgb(255, 255, 255);
+	color: black;
     font-size: 13px;
 }
 /*********************************/
@@ -144,8 +149,8 @@
 .tabla-usuario2 th{
 	font-family: 'Baloo 2';
 	text-align: start;
-	background: rgb(42, 145, 177);
-	color: white;
+	background: rgb(255, 255, 255);
+	color: black;
     font-size: 13px;
 }
 /*********************************/
@@ -159,8 +164,8 @@
 .tabla-usuario3 th{
 	font-family: 'Baloo 2';
 	text-align: start;
-	background: rgb(177, 42, 143);
-	color: white;
+	background: rgb(255, 255, 255);
+	color: black;
     font-size: 13px;
 }
 .cont-card2 .card3{
@@ -169,4 +174,42 @@
 	display: flex;
     margin-top: 20px;
     justify-content: center;
+}
+.card4{
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	margin-top: 40px;
+}
+.tabla4{
+	display: initial;
+	justify-content: center;
+}
+.tabla-productos{
+	width: 100%;
+}
+.card4 .tabla4 h1{
+	font-family: 'Baloo 2';
+	font-size: 15px;
+	color: #031b1f;
+}
+.tabla-productos{
+	width: 100%;
+    margin-top: 10px;
+    font-size: 15px;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.tabla-productos th{
+	font-family: 'Baloo 2';
+	text-align: center;
+	padding: 3px;
+	background: rgb(26, 133, 165);
+	color: white;
+}
+.tabla-productos td{
+	font-size: 13px;
+	font-family: 'Baloo 2';
+	padding: 5px;
+	text-align: center;
 }

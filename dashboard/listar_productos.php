@@ -8,52 +8,39 @@
 <head>
 	<meta charset="UTF-8">
 	<?php include "includes/scripts.php"; ?>
-	<title>Lista de Usuarios</title>
+	<title>Lista de Productos</title>
 </head>
 <body>
 	<?php include "includes/header.php" ?>
     <section id="container">
         <div class="tabla-usuario">
-            <h1><i class="fas fa-users"></i> Lista de Usuarios</h1>
+            <h1><i class="fas fa-archive"></i> Lista de Productos</h1>
             <div class="botones">
                 <div class="botones-2">
-                    <?php 
-                    if($_SESSION['rol'] != 1){ ?>
-                    <a href="pdf_usuario.php" class="btn-info">Exportar PDF <i class="fas fa-file-pdf"></i></a>
-                        <form action="buscar_usuario.php" method="get" class="form-search">
+                    <a href="registro_producto.php" class="btn-nuevo"><i class="fas fa-folder-plus"></i> Registrar Producto</a>
+                    <a href="pdf_producto.php" class="btn-info">Exportar PDF <i class="fas fa-file-pdf"></i></a>
+                        <form action="buscar_producto.php" method="get" class="form-search">
                             <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
                             <input type="submit" value="Buscar" class="btn-search">
                         </form>
-                    <?php }else{ ?>
-                    <a href="registro_usuario.php" class="btn-nuevo"><i class="fas fa-user-plus"></i> Crear Usuario</a>
-                    <a href="pdf_usuario.php" class="btn-info">Exportar PDF <i class="fas fa-file-pdf"></i></a>
-                        <form action="buscar_usuario.php" method="get" class="form-search">
-                            <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
-                            <input type="submit" value="Buscar" class="btn-search">
-                        </form>
-                    <?php } ?>
                 </div>
             </div>
             <div class="table">
                 <table>
                     <tr>
-                        <th>Id Usuario</th>
-                        <th>Nombre</th>
-                        <th>Correo Electronico</th>
-                        <th>Nombre de Usuario</th>
-                        <th>Rol</th>
-                        <?php 
-                            if($_SESSION['rol'] != 1){
-
-                            }else{
-                        ?>
-                        <th>Acciones</th>
-                        <?php } ?>
+                        <th class="titulo-pro">Codigo</th>
+                        <th>Descipción</th>
+                        <th>Precio</th>
+                        <th class="titulo-pro">Stock</th>
+                        <th class="titulo-pro">Proveedor</th>
+                        <th class="titulo-pro">Categoria</th>
+                        <th class="titulo-pro">Foto</th>
+                        <th class="titulo-pro">Acciones</th>
                     </tr>
                     <?php
 
                         //paginador
-                        $sql_registe = mysqli_query($conn, "SELECT COUNT(*) as total_registro FROM usuarios WHERE estatus = 1");
+                        $sql_registe = mysqli_query($conn, "SELECT COUNT(*) as total_registro FROM productos WHERE estatus = 1");
                         $row_registe = mysqli_fetch_array($sql_registe);
                         $total_registro = $row_registe['total_registro'];
 
@@ -68,11 +55,11 @@
                         $desde = ($pagina - 1 ) * $por_pagina;
                         $total_paginas = ceil($total_registro / $por_pagina);
 
-                        $query = mysqli_query($conn, "SELECT u.codigo, u.nombre, u.correo, u.usuario, r.rol 
-                                                            FROM usuarios u 
-                                                            INNER JOIN rol r ON u.rol = r.id_rol 
-                                                            WHERE estatus = 1 
-                                                            ORDER BY u.codigo ASC
+                        $query = mysqli_query($conn, "SELECT p.codigo_prod, p.descripcion, FORMAT(p.precio,0) as precio, p.existencia, pr.proveedor, p.foto, c.descripcion as category
+                                                            FROM ((productos p 
+                                                            INNER JOIN proveedor pr ON p.proveedor = pr.nit_proveedor)
+                                                            INNER JOIN categorias c ON p.category = c.categoria_id)
+                                                            WHERE p.estatus = 1 ORDER BY pr.proveedor
                                                             LIMIT $desde, $por_pagina");
 
                         mysqli_close($conn);
@@ -81,41 +68,48 @@
                         if($resltado > 0){
 
                             while($row = mysqli_fetch_array($query)){
+
+                            if($row['foto'] != 'img_producto.png'){
+
+                                $foto = 'img/uploads/'.$row['foto'];
+                            }else{
+
+                                $foto = 'img/'.$row['foto'];
+                            }
                     ?>
                             <?php 
                             $clase = 0;
                             if($_SESSION['rol'] == 1){ 
                                 $clase = 1;
                             }else{ 
-                                $clase = 2;
+                                $clase = 1;
                             } 
                             ?>
                                 <tr class="rol-<?php echo $clase ?>">
-                                <td><?php echo $row['codigo']; ?></td>
-                                <td><?php echo $row['nombre']; ?></td>
-                                <td><?php echo $row['correo']; ?></td>
-                                <td><?php echo $row['usuario']; ?></td>
-                                <?php if(!$row['rol']){
-                                    ?>
-                                    <td><?php echo "DEFINIR"; ?></td>
-                                <?php
-                                }else{
+                                <td class="titulo-pro"><?php echo $row['codigo_prod']; ?></td>
+                                <td><?php echo $row['descripcion']; ?></td>
+                                <td><?php echo $row['precio']; ?></td>
+                                <?php 
+                                    if($row['existencia'] <= 30){
                                 ?>
-                                    <td><?php echo $row['rol'] ?></td>
-                                <?php
-                                }
-                                ?>
-                                <?php if($_SESSION['rol'] != 1){ 
-                                    
-                                }else{?>
-                                <td class="acc">
-                                    <a class="link_edit" href="editar_usuario.php?codigo=<?php echo $row['codigo']; ?>">
+                                        <td style="background: red; color: white;" class="titulo-pro"><?php echo $row['existencia']; ?></td>
+                                <?php    }else{ ?>
+                                        <td class="titulo-pro"><?php echo $row['existencia']; ?></td>
+                                <?php } ?>
+                                <td class="titulo-pro"><?php echo $row['proveedor']; ?></td>
+                                <td class="titulo-pro"><?php echo $row['category']; ?></td>
+                                <td class="imagen-pro"><img src="<?php echo $foto;?>" alt="<?php echo $row['descripcion']; ?>" style="width: 150px;"> </td>
+                                
+                                <td class="titulo-pro">
+                                    <a class="link_add add_product" href="agregar_producto.php?cod=<?php echo $row['codigo_prod']; ?>" >
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+
+                                    <a class="link_edit" href="editar_producto.php?cod=<?php echo $row['codigo_prod']; ?>">
                                         <i class="fas fa-edit"></i>
                                     </a>
 
-                                <?php if($row['codigo'] != 1){  ?>
-
-                                    <a class="link_delete" href="eliminar_usuario.php?codigo=<?php echo $row['codigo']; ?>">
+                                    <a class="link_delete" href="eliminar_producto.php?cod=<?php echo $row['codigo_prod']; ?>">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 <?php } ?>
@@ -123,8 +117,8 @@
                                 <?php } ?>
                             </tr>
                     <?php
-                            }
-                        }
+                            
+                        
                     ?>
                 </table>
             </div>
