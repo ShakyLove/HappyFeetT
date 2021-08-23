@@ -8,7 +8,7 @@
         $alert = '';
         if(empty($_POST['nombre'])){
 
-            $alert = '<p class="msg_error">Llenar el campo</p>';
+            $alert = 1;
         }else{
 
             $nombre = $_POST['nombre'];
@@ -18,11 +18,11 @@
 
             if($query_insert ){
 
-                $alert = '<p class="msg_save">Categoria agregada</p>';
+                $alert = 2;
                 
             }else{
 
-                $alert = '<p class="msg_error">Error al guardar el categoria</p>';
+                $alert = 3;
             }
         }
 
@@ -33,7 +33,7 @@
 <head>
 	<meta charset="UTF-8">
 	<?php include "includes/scripts.php"; ?>
-	<title>Lista de Categorias</title>
+	<title>Lista de Categorías</title>
 </head>
 <body>
 	<?php include "includes/header.php" ?>
@@ -41,17 +41,17 @@
     <div class="cont-categoria" style="display: flex; width: 100%; height: 100%; justify-content: center;">
     
         <div class="tabla-usuario" style="width: 60%; margin-top: 30px">
-            <h1><i class="fas fa-clipboard-check"></i> Lista de Categoria</h1>
+            <h1><i class="fas fa-clipboard-check"></i> Lista de Categorías</h1>
             <div class="botones" style="width: 95%; justify-content: flex-end;">
                 <div class="botones-2" style="width: 50%; ">
-                        <form action="buscar_entrada.php" method="get" class="form-search" style="width: 100%;">
+                        <form action="buscar_categoria.php" method="get" class="form-search" style="width: 100%;">
                             <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
                             <input type="submit" value="Buscar" class="btn-search">
                         </form>
                 </div>
             </div>
             <div class="table">
-                <table>
+                <table class="table-categoria">
                     <tr>
                         <th style="text-align: center; width: 10%;">ID</th>
                         <th style="width: 50%;">Descripción</th>
@@ -153,18 +153,82 @@
         </div>
 
         <div class="form_register" style="margin-top: 30px;">
-            <h1> Agregar Categoria</h1>
+            <h1> Agregar Categoría</h1>
             <hr>
-            <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
+            <div class="alert"></div>
+            <?php isset($alert) ? $alert: ''; ?>
             <form action="" method="POST">
+                <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
+                <label for="nombre">Categoría</label>
+                <input type="text" name="nombre" placeholder="Tipo de categoría" id="nombre">
 
-                <label for="nombre">Categoria</label>
-                <input type="text" name="nombre" placeholder="Tipo de categoria" id="nombre">
-
-                <input type="submit" class="btn-save" value="Agregar Categoria">
+                <input type="submit" class="btn-save" value="Agregar Categoría">
             </form>
         </div>
     </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+
+    valor = $('#valor_form').val();
+    if(valor == 1){
+
+        Swal.fire({
+            title: 'Llenar el campo',
+            icon: 'error',
+            confirmButtonText: `Aceptar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                
+                $('#valor_form').val('0');
+                
+            } 
+        });
+    }else{
+        if(valor == 2){
+
+            Swal.fire({
+                title: 'Categoría agregada',
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                                
+                    var url = 'listar_categoria.php';
+                    $(location).attr('href',url);
+                } 
+            });
+        }else{
+            if(valor == 3){
+
+                Swal.fire({
+                    title: 'Error al agregar categoría',
+                    icon: 'error',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {                
+                
+                        var url = 'listar_productos.php';
+                        $(location).attr('href',url);
+                    } 
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>

@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="table">
-                <table>
+                <table class="table-productos">
                     <tr>
                         <th class="titulo-pro">Codigo</th>
                         <th>Descipción</th>
@@ -153,5 +153,21 @@
             </div>
         </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('navegacion').style.transition = '0.25s'
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('navegacion').style.transition = '0.25s'
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+</script>
 </body>
 </html>

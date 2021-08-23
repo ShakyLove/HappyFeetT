@@ -17,7 +17,7 @@ if(!empty($_SESSION['active'])){
             $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
             $contraseña = md5(mysqli_real_escape_string($conn, $_POST['contraseña']));
 
-            $query = mysqli_query($conn, "SELECT u.codigo, u.usuario, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
+            $query = mysqli_query($conn, "SELECT u.codigo, u.nombre, u.usuario, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
                                                         WHERE (u.usuario = '$usuario' AND u.contraseña = '$contraseña') AND estatus = 1");
             mysqli_close($conn);
             $resultado = mysqli_num_rows($query);
@@ -56,6 +56,7 @@ if(!empty($_SESSION['active'])){
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2&family=Roboto:wght@100&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Rokkitt:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/login/login.css">
+    <link rel="stylesheet" href="./dashboard/SweetAlert/dist/sweetalert2.min.css">
 </head>
 <body>
     <div class="container mt-5 shadow con">
@@ -101,8 +102,8 @@ if(!empty($_SESSION['active'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
-    <script src="../jquery/jquery-3.3.1.min.js"></script>
-    <script src="../js/consul.js"></script>
-    <script src="./bootstrap/js/bootstrap.min.js"></script>    
+    <script src="jquery/jquery-3.3.1.min.js"></script>
+    <script src="./dashboard/SweetAlert/dist/sweetalert2.all.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>    
 </body>
 </html>

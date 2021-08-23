@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="table">
-                <table>
+                <table >
                     <tr>
                         <th>ID</th>
                         <th>Producto</th>

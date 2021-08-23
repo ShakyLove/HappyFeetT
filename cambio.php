@@ -32,11 +32,11 @@
                 <form action="./bd/login/cambioContra.php" method="POST" >
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="user" class="form-label">Ingresa tu nombre de usuario</label>
-                        <input type="text" class="form-control" name="usuario" autofocus>
+                        <input type="text" class="form-control" name="usuario" autofocus required>
                     </div>
                     <div class="mb-4 col-md-8 mx-auto">
                         <label for="password" class="form-label">Digita una nueva contraseña</label>
-                        <input type="password" class="form-control" name="contraseña">
+                        <input type="password" class="form-control" name="contraseña" required>
                     </div>
                     <div class="d-grid col-md-8 ingresa mx-auto mb-2">
                         <input type="submit" class="btn btn-primary" value="Enviar" name="change">
@@ -56,8 +56,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
-    <script src="../jquery/jquery-3.3.1.min.js"></script>
-    <script src="../js/consul.js"></script>
+    <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="./bootstrap/js/bootstrap.min.js"></script>     
 </body>
 </html>

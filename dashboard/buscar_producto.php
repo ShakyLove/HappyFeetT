@@ -39,7 +39,7 @@
                         <th class="titulo-pro">Codigo</th>
                         <th>Descipción</th>
                         <th>Precio</th>
-                        <th>Stock</th>
+                        <th class="titulo-pro">Stock</th>
                         <th class="titulo-pro">Proveedor</th>
                         <th class="titulo-pro">Categoria</th>
                         <th class="titulo-pro">Foto</th>
@@ -112,7 +112,13 @@
                                 <td class="titulo-pro"><?php echo $row['codigo_prod']; ?></td>
                                 <td><?php echo $row['descripcion']; ?></td>
                                 <td><?php echo $row['precio']; ?></td>
-                                <td><?php echo $row['existencia']; ?></td>
+                                <?php 
+                                    if($row['existencia'] <= 30){
+                                ?>
+                                        <td style="background: red; color: white;" class="titulo-pro"><?php echo $row['existencia']; ?></td>
+                                <?php    }else{ ?>
+                                        <td class="titulo-pro"><?php echo $row['existencia']; ?></td>
+                                <?php } ?>
                                 <td class="titulo-pro"><?php echo $row['proveedor']; ?></td>
                                 <td class="titulo-pro"><?php echo $row['category']; ?></td>
                                 <td class="imagen-pro"><img src="<?php echo $foto;?>" alt="<?php echo $row['descripcion']; ?>" style="width: 150px;"> </td>

@@ -6,7 +6,7 @@
 	box-sizing: border-box;
 }
 body{
-	background: #ededed;
+	background: #eeeeee;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Handlee';
@@ -32,7 +32,7 @@ h6{
 	font-size: 12px;
 }
 p{
-	font-family: 'arial';
+	font-family: 'Baloo 2';
 	letter-spacing: 2px;
 	font-size: 14px;
 	line-height: 20px;
@@ -43,7 +43,7 @@ a{
 	letter-spacing: 1px;
 }
 span {
-    font-family: 'GothamBook';
+    font-family: 'Baloo 2';
     letter-spacing: 1px;
     font-size: 14px;
     line-height: 20px;
@@ -53,8 +53,8 @@ header{
 	width: 100%;
 }
 .header{
-	color: #FFF;
-	background: #093a46;
+	color: rgb(41, 41, 41);
+	background: initial;
 	height: 50px;
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -75,9 +75,9 @@ header{
     align-items: center;
 }
 .optionsBar span {
-    color: #FFF;
+    color: rgb(20, 20, 20);
     font-size: 11pt;
-    font-family: 'GothamBook';
+    font-family: 'Baloo 2';
     margin-left: 30px;
 }
 .photouser {
@@ -105,7 +105,7 @@ header{
     margin-left: 30px;
 }
 nav ul{
-	background: #1c8fa3;
+	background: #ffffff;
 	list-style: none;
 	display: -webkit-flex;
 	display: -moz-flex;
@@ -119,10 +119,10 @@ nav ul > li a{
 	position: relative;
 }
 nav a{
-	color: #FFF;
+	color: rgb(34, 34, 34);
 	display: block;
 	font-size: 10pt;
-	font-family: 'GothamBook';
+	font-family: 'Baloo 2';
 	padding: 18px 30px;
 	letter-spacing: 1px;
 	transition: background .5s;
@@ -140,7 +140,7 @@ nav ul li:hover ul{
 }
 nav li ul{
 	/*background: #177470;*/
-	background: #1c8fa3;
+	background: #ffffff;
 	display: none;
 	flex-direction: column;
 	position: absolute;
@@ -154,7 +154,8 @@ nav li ul a{
 }
 nav li ul a:hover{
 	/*background: #2c9595;*/
-	background: #093a46;
+	background: #000000;
+	color: white;
 }
 nav li ul li:last-child{
 	border-radius: 0 0 10px 10px;
@@ -171,10 +172,11 @@ section .form_register{
 	margin-top: 10px;
 }
 section .form_register h1{
-	color: #1c8fa3;
+	color: black;
 	text-align: center;
 	font-size: 30px;
 	font-family: 'Baloo 2';
+	margin-top: 20px;
 }
 hr{
 	border: 0;
@@ -209,7 +211,7 @@ input,select{
 }
 .btn-save{
 	font-size: 12pt;
-	background: #1c8fa3;
+	background: #E1306C;
 	padding: 10px;
 	color: white;
 	letter-spacing: 1px;
@@ -218,9 +220,9 @@ input,select{
 	margin: 15px auto;
 }
 .btn-save:hover{
-	background: #093a46;
-	color: white;
-	border: 0;
+	background: white;
+	color: black;
+	border: 1px solid black;
 }
 .alert{
 	width: 90%;
@@ -230,12 +232,12 @@ input,select{
 	text-align: center;
 }
 .msg_error{
-	background: #df4759;
+	background: #eb0a24;
 	color: white;
 	transition: 3s;
 }
 .msg_save{
-	background: #42ba96;
+	background: #1faf84;
 	color: white;
 }
 .alert p{
@@ -246,10 +248,11 @@ input,select{
 	margin-top: 10px;
 }
 .tabla-usuario h1{
-	color: #1c8fa3;
+	color: black;
 	text-align: center;
 	font-size: 30px;
 	font-family: 'Baloo 2';
+	margin-top: 20px;
 }
 .tabla-usuario .botones{
 	display: flex;
@@ -260,16 +263,17 @@ input,select{
 }
 .tabla-usuario .btn-nuevo{
 	display: inline-block;
-	background: #1c8fa3;
-	color: white;
+	background: white;
+	color: black;
 	border-radius: 4px;
 	margin: 5px;
 	padding: 5px 25px;
 	font-family: 'Baloo 2';
+	border: 1px solid black;
 }
 .tabla-usuario .btn-info{
 	display: inline-block;
-	background: #df4759;
+	background: #eb0a24;
 	color: white;
 	border-radius: 4px;
 	margin: 5px;
@@ -330,7 +334,7 @@ table .rol-2 td{
 }
 .link_delete{
 	display: inline-block;
-	background: #df4759;
+	background: #eb0a24;
 	color: white;
 	border-radius: 6px;
 	padding: 12px;
@@ -350,7 +354,7 @@ table .rol-2 td{
 }
 .data-delete h2{
 	margin-top: 20px;
-	color: #1c8fa3;
+	color: black;
 	text-align: center;
 	font-size: 30px;
 	font-family: 'Baloo 2';
@@ -362,13 +366,13 @@ table .rol-2 td{
 	margin-top: 10px;
 }
 .data-delete span{
-	color: #1c8fa3;
+	color: #E1306C;
 	font-size: 18px;
 	font-weight: bold;
 }
 .btn-cancel, .btn-ok{
 	width: 100px;
-	background: #1c8fa3;
+	background: #E1306C;
 	color: white;
 	display: inline-block;
 	padding: 5px;
@@ -376,14 +380,15 @@ table .rol-2 td{
 	cursor: pointer;
 	margin: 10px;
 	font-family: 'Baloo 2';
-}
-.btn-ok:hover{
-	background: #093a46;
-	color: white;
 	border: 0;
 }
+.btn-ok:hover{
+	background: white;
+	color: black;
+	border: 1px solid black;
+}
 .btn-cancel{
-	background: #df4759;
+	background: black;
 }
 .btn-cancel:hover{
 	background: black;
@@ -398,6 +403,7 @@ table .rol-2 td{
 	border: 1px solid #093a46;
 	background: white;
 	width: 50%;
+	padding: 10px;
 }
 .datos-delete form{
 	background: initial;
@@ -444,13 +450,13 @@ table .rol-2 td{
 	font-family: 'Baloo 2';
 }
 .paginador a:hover{
-	background: #1c8fa3;
+	background: black;
 	color: white;
 	border: none;
 }
 .pageSelected{
 	color: white;
-	background: #1c8fa3;
+	background: black;
 }
 /******************* BUSCADOR ****************************/
 .buscador{
@@ -470,10 +476,10 @@ table .rol-2 td{
 	border: none;
 }
 .form-search .btn-search{
-	background: #1c8fa3;
-	color: white;
+	background: white;
+	color: black;
+	border: 1px solid black;
 	padding: 0 20px;
-	border: 0;
 	cursor: pointer;
 	width: 20%;
 	margin-left: 5px;
@@ -597,8 +603,14 @@ table .rol-2 td{
 	justify-content: center;
 	align-items: center;
 }
+.bodyModal h4{
+	color: white;
+	background: #E1306C;
+	font-family: 'Baloo 2';
+	font-size: 20px;
+}
 .bodyModal form h1{
-	color: #1c8fa3;
+	color: black;
 	text-align: center;
 	font-size: 30px;
 	font-family: 'Baloo 2';
@@ -612,7 +624,21 @@ table .rol-2 td{
 }
 .btn-add{
 	color: white;
-	background: #1c8fa3;
+	background: #E1306C;
+	width: 130px;
+	padding: 10px;
+	margin: 10px;
+	border: none;
+	border-radius: 10px;
+	text-align: center;
+	display: inline-block;
+	font-size: 15px;
+	font-family: 'Baloo 2';
+	cursor: pointer;
+}
+.btn-addVnta{
+	color: white;
+	background: black;
 	width: 130px;
 	padding: 10px;
 	margin: 10px;
@@ -626,16 +652,18 @@ table .rol-2 td{
 }
 .btn-addC{
 	color: white;
-	background: #df4759;
-	width: 130px;
-	padding: 10px;
-	margin: 10px;
+	background: #eb0a24;
+	width: 30px;
+	height: 30px;
+	padding: 0;
+	margin: 0;
 	border: none;
 	border-radius: 10px;
 	text-align: center;
 	display: inline-block;
 	font-size: 15px;
 	font-family: 'Baloo 2';
+	cursor: pointer;
 }
 .btn-addC:hover{
 	color: white;
@@ -648,4 +676,258 @@ table .rol-2 td{
 .closeForm:hover{
 	background: black;
 	color: white;
+}
+/**********************VENTAS*************************/
+.datos-venta, .title_page{
+	width: 100%;
+	max-width: 1000px;
+	margin: auto;
+	margin-bottom: 20px;
+}
+.datos{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border: 2px solid #000000;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+.action_cliente{
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+}
+
+.datos label{
+	margin: 5px auto;
+}
+.wd20{
+	width: 20%;
+}
+.wd25{
+	width: 25%;
+}
+.wd30{
+	width: 30%;
+}
+.wd40{
+	width: 40%;
+}
+.wd50{
+	text-align: center;
+}
+.wd60{
+	width: 60%;
+}
+.wd100{
+	width: 100%;
+}
+#div_registro_cliente, #add_product_venta{
+	display: none;
+}
+.displayN{
+	display: none;
+}
+.tbl-venta{
+	max-width: 1000px;
+	margin: auto;
+}
+.tbl-venta td{
+	font-family: 'Baloo 2';
+	padding: 10px;
+}
+.tbl-venta tfoot td{
+	font-weight: bold;
+	font-family: 'Baloo 2';
+}
+.textright{
+	text-align: right;
+}
+.textcenter{
+	text-align: center;
+}
+.textleft{
+	text-align: left;
+}
+.btn_anular{
+	background-color: #f36a6a;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 10px;
+	margin: 0 3px;
+	color: #FFF;
+}
+.title-page h1{
+	color: black;
+	text-align: center;
+	font-size: 30px;
+	font-family: 'Baloo 2';
+}
+.datos-venta h4{
+	color: black;
+	font-size: 20px;
+	font-family: 'Baloo 2';
+}
+span .pagada{
+	font-family: 'Baloo 2';
+}
+span .anulada{
+	font-family: 'Baloo 2';
+}
+/**********************PANEL DE CONTROL*************************/
+.prin, .prin-2{
+	width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.divContainer, .divInfoSistema{
+	width: 80%;
+}
+.titlePanelControl{
+	width: 100%;
+	font-family: 'Baloo 2';
+	margin-top: 20px;
+	text-align: center;
+	color: black;
+	font-size: 20px;
+}
+.dashboard{
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	margin: auto;
+	margin-top: 10px;
+}
+.dashboard a{
+	color: #FFF;
+	padding: 20px;
+	background: #FFF;
+	font-size: 20px;
+	text-align: center;
+	font-family: 'Baloo 2';
+}
+.dashboard p{
+	color: #FFF;
+	font-size: 18px;
+}
+.dashboard a span{
+	font-weight: bold;
+	font-size: 18px;
+}
+.containerPerfil{
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+.containerDataUser, .containerDataEmpresa, .containerDataProductos{
+	width: 900px;
+	height: 500px;
+	background: #FFF;
+	padding: 20px;
+	margin-top: 10px;
+	box-shadow: 5px 3px 3px rgba(0, 0, 0, 0.3);
+}
+.logoUser, .logoEmpresa{
+	display: flex;
+	justify-content: center;
+	width: 300px;
+	border-radius: 50%;
+	margin: 20px;
+	padding: 10px;
+}
+.logoUser img, .logoEmpresa img{
+	width: 100%;
+	height: 100%;
+}
+.divDataUser{
+	padding: 10px;
+	margin: auto;
+}
+.divInfoSistema h4{
+	padding: 5px 10px;
+	color: black;
+	border-radius: 5px;
+	text-align: center;
+	margin-bottom: 10px;
+	font-family: 'Baloo 2';
+}
+.divDataUser > div{
+	display: flex;
+}
+.divDataUser label{
+	width: 150px;
+	margin: 0;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+.divDataUser span{
+	font-family: 'Baloo 2';
+	padding: 5px;
+	margin-top: 10px;
+}
+.divInfoSistema form{
+	padding: 20px;
+}
+.divInfoSistema input{
+	margin-bottom: 10px;
+}
+.divInfoSistema button{
+	width: 100%;
+	border-radius: 10px;
+	border: none;
+	font-family: 'Baloo 2';
+	padding: 5px;
+}
+.containerDataProductos .table-info table{
+	width: 100%;
+}
+.table-info table td{
+	font-family: 'Baloo 2';
+}
+.table-info table th{
+	background: #E1306C;
+}
+.data-empresa label{
+	margin: 0;
+}
+.direcciones{
+	top: 0;
+	font-size: 20px;
+}
+.direcciones a{
+	color: rgb(0, 0, 0);
+	display: inline-block;
+	padding: 10px;
+	text-decoration: none;
+	margin-top: 250px;
+}
+.direcciones a:hover{
+	background: rgba(0, 0, 0, .5);
+	transition: .5s;
+}
+.entradasProd table td{
+	padding: 10px;
+}
+/*************TABLAS*****************/
+.table table th{
+	background: #E1306C;
+}
+.tbl-venta th{
+	background: #E1306C;
+}
+.cord{
+	width: 100%;
+    height: 20%;
+    display: grid;
 }

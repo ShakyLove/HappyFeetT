@@ -176,7 +176,7 @@
                         <p>Id categoria: <span><?php echo $id_categoria; ?></span></p>
                         <p>Descripcion: <span><?php echo $descripcion; ?></span></p>
 
-                        <form action="" method="POST">
+                        <form action="" method="POST" style="display: contents;">
                             <input type="hidden" name="categoria_id" value="<?php echo $id_categoria; ?>">
                             <input type="submit" value="Aceptar" class="btn-ok">
                             <a href="listar_categoria.php" class="btn-cancel">Cancelar</a>

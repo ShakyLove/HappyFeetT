@@ -7,7 +7,7 @@
         $alert = '';
         if(empty($_POST['proveedor']) || empty($_POST['producto']) || empty($_POST['precio']) || empty($_POST['cantidad']) || empty($_POST['categoria'])){
 
-            $alert = '<p class="msg_error">Todos los campos son obligatorios</p>';
+            $alert = 1;
         }else{
 
             $proveedor = $_POST['proveedor'];
@@ -38,10 +38,10 @@
                 if($nombre_foto != ''){
                     move_uploaded_file($url_temp,$src);
                 }
-                $alert = '<p class="msg_save">Producto guardado correctamente</p>';
+                $alert = 2;
             }else{
 
-                $alert = '<p class="msg_error">Error al guardar el producto</p>';
+                $alert = 3;
             }
         }
     }
@@ -60,9 +60,10 @@
         <div class="form_register">
             <h1><i class="fas fa-archive"></i> Registro Producto</h1>
             <hr>
-            <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
+            <div class="alert"></div>
+            <?php  isset($alert) ? $alert: ''; ?>
             <form action="" method="POST" enctype="multipart/form-data">
-
+                <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <label for="proveedor">Proveedor</label>
                 <?php
                     $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
@@ -124,9 +125,72 @@
 
                 <input type="submit" class="btn-save" value="Guardar Producto">
                 <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
-                border-radius: 5px; background: #df4759; display: inline-block; text-align: center;">Cancelar</a>
+                border-radius: 5px; background: black; color: white; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+
+    valor = $('#valor_form').val();
+    if(valor == 1){
+
+        Swal.fire({
+            title: 'Todos los campos son obligatorios',
+            icon: 'error',
+            confirmButtonText: `Aceptar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                
+                $('#valor_form').val('0');
+                
+            } 
+        });
+    }else{
+        if(valor == 2){
+
+            Swal.fire({
+                title: 'Producto registrado con éxito',
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                                
+                    var url = 'listar_productos.php';
+                    $(location).attr('href',url);
+                } 
+            });
+        }else{
+            if(valor == 3){
+
+                Swal.fire({
+                    title: 'Error al agregar producto',
+                    icon: 'error',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {                
+                
+                        var url = 'listar_productos.php';
+                        $(location).attr('href',url);
+                    } 
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>

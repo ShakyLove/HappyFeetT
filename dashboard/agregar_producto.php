@@ -7,7 +7,7 @@
         $alert = '';
         if(empty($_POST['cantidad']) || empty($_POST['precio'])){
 
-            $alert = '<p class="msg_error">Todos los campos son obligatorios</p>';
+            $alert = 1;
         }else{
 
             $codigo_prod = $_POST['codigo_prod'];
@@ -25,10 +25,10 @@
 
                 if($resultado > 0){
 
-                    $alert = '<p class="msg_save">Producto agregado correctamente</p>';
+                    $alert = 2;
                 }else{
 
-                    $alert = '<p class="msg_error">Error al agregar producto</p>';
+                    $alert = 3;
                 }
             }else{
 
@@ -87,9 +87,10 @@ if(empty($_REQUEST['cod'])){
         <div class="form_register">
             <h1><i class="fas fa-archive"></i> Agregar Producto</h1>
             <hr>
-            <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
+            <div class="alert"></div>
+            <?php isset($alert) ? $alert: ''; ?>
             <form action="" method="POST">
-
+            <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
             <div class="contenido" style="text-align: center;">
                 <h2 style="font-family: 'Baloo 2';"><?php echo $descripcion; ?></h2>
                 <img src="<?php echo $foto;?>" alt="<?php echo $row['descripcion']; ?>" style="width: 150px;">  
@@ -103,8 +104,75 @@ if(empty($_REQUEST['cod'])){
                 <input type="text" name="precio" placeholder="Precio del producto" id="precio">
 
                 <input type="submit" class="btn-save" value="Agregar Producto">
+                <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+
+    valor = $('#valor_form').val();
+    unidad = $('#cantidad').val();
+    if(valor == 1){
+
+        Swal.fire({
+            title: 'Todos los campos son obligatorios',
+            icon: 'error',
+            confirmButtonText: `Aceptar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                
+                $('#valor_form').val('0');
+                
+            } 
+        });
+    }else{
+        if(valor == 2){
+
+            Swal.fire({
+                title: 'Producto agregado con éxito',
+                text: unidad,
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                                
+                    var url = 'listar_productos.php';
+                    $(location).attr('href',url);
+                } 
+            });
+        }else{
+            if(valor == 3){
+
+                Swal.fire({
+                    title: 'Error al agregar producto',
+                    icon: 'error',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {                
+                
+                        var url = 'listar_productos.php';
+                        $(location).attr('href',url);
+                    } 
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>

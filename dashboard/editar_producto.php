@@ -7,7 +7,7 @@
         $alert = '';
         if(empty($_POST['proveedor']) || empty($_POST['producto']) || empty($_POST['precio']) || empty($_POST['id']) || empty($_POST['foto_actual']) || empty($_POST['foto_remove']) || empty($_POST['categoria'])){
 
-            $alert = '<p class="msg_error">Todos los campos son obligatorios</p>';
+            $alert = 1;
         }else{
 
             $codproducto = $_POST['id'];
@@ -51,10 +51,10 @@
                 if($nombre_foto != ''){
                     move_uploaded_file($url_temp,$src);
                 }
-                $alert = '<p class="msg_save">Producto actualizado correctamente</p>';
+                $alert = 2;
             }else{
 
-                $alert = '<p class="msg_error">Error al actualizar el producto</p>';
+                $alert = 3;
             }
         }
     }
@@ -91,10 +91,14 @@
                 $classRemove = '';
                 $foto = '<img id="img" src= "img/uploads/'.$row['foto'].'" alt="Producto">';
             }
+            $codigo_prod = $row['codigo_prod'];
+            $proveedor = $row['proveedor'];
+            $id_proveedor = $row['nit_proveedor'];
             $id_cat = $row['categoria_id'];
             $nombre_cat = $row['tipo_c'];
             $precio = $row['precio'];
             $nombre_pro = $row['descripcion'];
+            $picture = $row['foto'];
 
         }else{
 
@@ -116,19 +120,23 @@
         <div class="form_register">
             <h1><i class="fas fa-archive"></i> Actualizar Producto</h1>
             <hr>
-            <div class="alert"><?php echo isset($alert) ? $alert: ''; ?></div>
+            <div class="alert"></div>
+            <?php isset($alert) ? $alert: ''; ?>
             <form action="" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="<?php echo $row['codigo_prod']; ?>">
-                <input type="hidden" id="foto_actual" name="foto_actual" value="<?php echo $row['foto']; ?>">
-                <input type="hidden" id="foto_remove" name="foto_remove" value="<?php echo $row['foto']; ?>">
+                <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
+                <input type="hidden" name="id" value="<?php echo $codigo_prod; ?>">
+                <input type="hidden" id="foto_actual" name="foto_actual" value="<?php echo $picture; ?>">
+                <input type="hidden" id="foto_remove" name="foto_remove" value="<?php echo $picture; ?>">
 
                 <label for="proveedor">Proveedor</label>
                 <?php
                     $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
                     $resultado = mysqli_num_rows($query_proveedor);
+
+                    $row = mysqli_fetch_array($query_proveedor);
                 ?>
                 <select name="proveedor" id="proveedor" class="notItemOne">
-                <option value="<?php echo $row['nit_proveedor']; ?>"><?php echo $row['proveedor']; ?></option>
+                <option value="<?php echo $id_proveedor; ?>"><?php echo $proveedor; ?></option>
                 <?php 
                     if($resultado > 0){
                         while($row = mysqli_fetch_array($query_proveedor)){
@@ -183,9 +191,72 @@
 
                 <input type="submit" class="btn-save" value="Actualizar Producto">
                 <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
-                border-radius: 5px; background: #df4759; display: inline-block; text-align: center;">Cancelar</a>
+                border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+
+    valor = $('#valor_form').val();
+    if(valor == 1){
+
+        Swal.fire({
+            title: 'Todos los campos son obligatorios',
+            icon: 'error',
+            confirmButtonText: `Aceptar`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                
+                $('#valor_form').val('0');
+                
+            } 
+        });
+    }else{
+        if(valor == 2){
+
+            Swal.fire({
+                title: 'Producto actualizado con éxito',
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                                
+                    var url = 'listar_productos.php';
+                    $(location).attr('href',url);
+                } 
+            });
+        }else{
+            if(valor == 3){
+
+                Swal.fire({
+                    title: 'Error al actualizar producto',
+                    icon: 'error',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {                
+                
+                        var url = 'listar_productos.php';
+                        $(location).attr('href',url);
+                    } 
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>

@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="table">
-                <table>
+                <table class="table-proveedor">
                     <tr>
                         <th>ID</th>
                         <th>Proveedor</th>
@@ -131,5 +131,19 @@
             </div>
         </div>
     </section>
+<script type="text/javascript">
+    let ubicacionPrincipal = window.pageYOffset;
+    window.onscroll = function Scroll(){
+        let desplazamiento = window.pageYOffset;
+        if(desplazamiento == 0){
+            document.getElementById('navegacion').style.display = 'block';
+            document.getElementById('header').style.background = 'initial';
+        }else{
+            document.getElementById('navegacion').style.display = 'none';
+            document.getElementById('header').style.background = 'white';
+        }
+        ubicacionPrincipal = desplazamiento;
+    }
+</script>
 </body>
 </html>

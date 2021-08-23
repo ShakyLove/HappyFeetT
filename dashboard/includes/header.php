@@ -5,9 +5,9 @@
         header('location: ../login.php');
     }
 ?>
-    <header>
+    <header id="header">
 		<div class="header">
-			<img class="photouser2" src="img/logo.png" alt="logo">
+			<a href="#" class="ver_modal"><img class="photouser2" src="img/logo.png" alt="logo"></a>
 			<h1>Happy Feet Technology</h1>
 			<div class="optionsBar">
 				<?php if($_SESSION['rol'] != 1){ ?>
@@ -23,24 +23,44 @@
 	</header>
 	<div class="modal">
 		<div class="bodyModal">
-			<form action="" method="POST" name="form_add_product" id="form_add_product" onsubmit="event.preventDefault(); sendDataProduct();">
+		<div style="display: flex; border-radius: 20px;" class="containerDataUser">
+            <div class="logoUser">
+                <img src="img/avatar.jpg" >
+            </div>
+            <div class="divDataUser">
+                <h4>Información Personal</h4>
+				<?php 
 
-				<h1><i class="fas fa-archive"></i> Agregar Producto</h1><hr>
-				<h2 class="nameProducto"></h2><br>
-				<img src="" alt="" id="imgProd">
+					$user = $_SESSION['codigo'];
 
-				<input type="number" name="cantidad" id="txtCantidad" placeholder="Cantidad del producto" require><br>
+					$query = mysqli_query($conn, "SELECT u.codigo, u.correo, u.nombre, u.usuario, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
+					WHERE u.codigo =  '$user'");
+					$resultado = mysqli_num_rows($query);
 
-				<input type="text" name="precio" id="txtPrecio" placeholder="Precio del producto" require><br>
-
-				<input type="hidden" name="producto_id" id="producto_id"  require>
-
-				<input type="hidden" name="action" value="addProduct" require>
-
-				<div class="alert alertAddProduct"></div>
-
-				<button type="submit" class="btn-add">Agregar</button>
-				<a href="#" class="btn-addC closeModal" onclick="closeModal();">Cerrar</a>
-			</form>
+					if($resultado > 0){
+						$row = mysqli_fetch_array($query);
+					}
+				
+				?>
+                <div>
+                    <label for="">Nombre: </label> <span><?php echo $row['nombre']; ?></span>
+                </div>
+                <div>
+                    <label for="">Correo: </label> <span><?php echo $row['correo']; ?></span>
+                </div>
+                    <h4>Datos Usuario</h4>
+                <div>
+					<?php if($_SESSION['rol'] != 1){ ?>
+                    <label for="">Rol: </label> <span>Empleado</span>
+					<?php }else{ ?>
+					<label for="">Rol: </label> <span>Administrador</span>
+					<?php } ?>
+                </div>
+                <div>
+                    <label for="">Usuario: </label> <span><?php echo $row['usuario']; ?></span>
+                </div>
+            </div>
+			<a href="#" class="btn-addC closeModal" onclick="closeModal();">X</a>
+        </div>
 		</div>
 	</div>

@@ -58,7 +58,7 @@
 <head>
 	<meta charset="UTF-8">
 	<?php include "includes/scripts.php"; ?>
-	<title>Eliminar Proveedor</title>
+	<title>Eliminar Producto</title>
 </head>
 <body>
 	<?php include "includes/header.php" ?>
