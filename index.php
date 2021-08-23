@@ -15,7 +15,7 @@
 
 <body>
     <header>
-        <div class="menu">x
+        <div class="menu">
             <nav>
                 <ul>
                     <li><a href="#">Nosotros</a></li>
