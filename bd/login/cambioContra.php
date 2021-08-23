@@ -3,6 +3,13 @@
     include("../conn.php");
 
     if(isset($_POST['change'])){
+
+        if(empty($_POST['usuario'] || empty($_POST['contraseña']))){
+
+            $_SESSION['message'] = 'Nombre de usuario incorrecto';
+            $_SESSION['message_type'] = 'danger';
+        }else{
+            
         $usuario = $_POST['usuario'];
         $contraseña = $_POST['contraseña'];
 
@@ -17,6 +24,7 @@
         $_SESSION['message_type'] = 'secondary';
         header('location: ../../login.php');
     }
+}
 
 
 ?>

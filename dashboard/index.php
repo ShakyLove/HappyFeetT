@@ -220,7 +220,7 @@
                             ?>
                                 <td style="color:#E1306C;" class="titulo-pro"><i class="fas fa-archive fa-1x"></i></td>
                                 <td class="titulo-pro">Productos</td>
-                                <td class="titulo-pro"><?php echo $row_pro['suma']; ?></td>
+                                <td class="titulo-pro"><?php echo $row_prod['suma']; ?></td>
                             </tr>
                             <tr>
                             <?php 

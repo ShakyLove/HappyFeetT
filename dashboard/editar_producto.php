@@ -117,81 +117,92 @@
 <body>
 	<?php include "includes/header.php" ?>
     <section id="container">
-        <div class="form_register">
+        <div class="form_register" style="width: 900px;">
             <h1><i class="fas fa-archive"></i> Actualizar Producto</h1>
             <hr>
             <div class="alert"></div>
             <?php isset($alert) ? $alert: ''; ?>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data" style="display: flex;">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <input type="hidden" name="id" value="<?php echo $codigo_prod; ?>">
                 <input type="hidden" id="foto_actual" name="foto_actual" value="<?php echo $picture; ?>">
                 <input type="hidden" id="foto_remove" name="foto_remove" value="<?php echo $picture; ?>">
+                <div style="width: 50%; margin: 0 20px; margin-top: 45px;">
+                    <div class="label">
+                        <label for="proveedor">Proveedor</label>
+                        <?php
+                            $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
+                            $resultado = mysqli_num_rows($query_proveedor);
 
-                <label for="proveedor">Proveedor</label>
-                <?php
-                    $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
-                    $resultado = mysqli_num_rows($query_proveedor);
+                            $row = mysqli_fetch_array($query_proveedor);
+                        ?>
+                        <select name="proveedor" id="proveedor" class="notItemOne">
+                        <option value="<?php echo $id_proveedor; ?>"><?php echo $proveedor; ?></option>
+                        <?php 
+                            if($resultado > 0){
+                                while($row = mysqli_fetch_array($query_proveedor)){
 
-                    $row = mysqli_fetch_array($query_proveedor);
-                ?>
-                <select name="proveedor" id="proveedor" class="notItemOne">
-                <option value="<?php echo $id_proveedor; ?>"><?php echo $proveedor; ?></option>
-                <?php 
-                    if($resultado > 0){
-                        while($row = mysqli_fetch_array($query_proveedor)){
+                        ?>
+                            <option value="<?php echo $row['nit_proveedor']; ?>"><?php echo $row['proveedor']; ?></option>
 
-                ?>
-                    <option value="<?php echo $row['nit_proveedor']; ?>"><?php echo $row['proveedor']; ?></option>
+                        <?php
+                                }
+                            }
+                        ?>
+                        </select>
+                    </div>
 
-                <?php
-                        }
-                    }
-                ?>
-                </select>
+                    <div class="label">
+                        <label for="producto">Producto</label>
+                        <input type="text" name="producto" placeholder="Nombre del producto" id="producto" value="<?php echo $nombre_pro; ?>">
+                    </div>
 
-                <label for="producto">Producto</label>
-                <input type="text" name="producto" placeholder="Nombre del producto" id="producto" value="<?php echo $nombre_pro; ?>">
+                    <div class="label">
+                        <label for="precio">Precio</label>
+                        <input type="number" name="precio" placeholder="Precio del producto" id="precio" value="<?php echo $precio; ?>">
+                    </div>
+                    <p id="parrafo" style="text-align: end; color: red;"></p>
 
-                <label for="precio">Precio</label>
-                <input type="number" name="precio" placeholder="Precio del producto" id="precio" value="<?php echo $precio; ?>">
+                    <div class="label">
+                        <label for="categoria">Categoria</label>
+                        <?php
+                            $query_categoria = mysqli_query($conn, "SELECT * FROM categorias WHERE estatus = 1 ORDER BY descripcion ASC");
+                            $resultado = mysqli_num_rows($query_categoria);
+                        ?>
+                        <select name="categoria" id="categoria" class="notItemOne">
+                        <option value="<?php echo $id_cat; ?>"><?php echo $nombre_cat; ?></option>
+                        <?php 
+                            if($resultado > 0){
+                                while($row = mysqli_fetch_array($query_categoria)){
 
-                <label for="categoria">Categoria</label>
-                <?php
-                    $query_categoria = mysqli_query($conn, "SELECT * FROM categorias WHERE estatus = 1 ORDER BY descripcion ASC");
-                    $resultado = mysqli_num_rows($query_categoria);
-                ?>
-                <select name="categoria" id="categoria" class="notItemOne">
-                <option value="<?php echo $id_cat; ?>"><?php echo $nombre_cat; ?></option>
-                <?php 
-                    if($resultado > 0){
-                        while($row = mysqli_fetch_array($query_categoria)){
+                        ?>
+                            <option value="<?php echo $row['categoria_id']; ?>"><?php echo $row['descripcion']; ?></option>
 
-                ?>
-                    <option value="<?php echo $row['categoria_id']; ?>"><?php echo $row['descripcion']; ?></option>
-
-                <?php
-                        }
-                    }
-                ?>
-                </select>
-
-                <div class="photo">
-                    <label for="foto">Foto</label>
-                        <div class="prevPhoto">
-                            <span class="delPhoto <?php echo $classRemove; ?>">X</span>
-                            <label for="foto"></label>
-                            <?php echo $foto; ?>
-                        </div>
-                        <div class="upimg">
-                            <input type="file" name="foto" id="foto">
-                        </div>
-                        <div id="form_alert"></div>
+                        <?php
+                                }
+                            }
+                        ?>
+                        </select>
+                    </div>
                 </div>
+                <div style="width: 50%;">
+                    <div class="photo">
+                        <label for="foto">Foto</label>
+                            <div class="prevPhoto">
+                                <span class="delPhoto <?php echo $classRemove; ?>">X</span>
+                                <label for="foto"></label>
+                                <?php echo $foto; ?>
+                            </div>
+                            <div class="upimg">
+                                <input type="file" name="foto" id="foto">
+                            </div>
+                            <div id="form_alert"></div>
+                    </div>
 
-                <input type="submit" class="btn-save" value="Actualizar Producto">
-                <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
-                border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
+                    <input type="submit" class="btn-save" value="Actualizar Producto">
+                    <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                    border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
+                </div>
             </form>
         </div>
     </section>
@@ -208,6 +219,19 @@
         }
         ubicacionPrincipal = desplazamiento;
     }
+
+        $('input#precio').keypress(function(event){
+
+            if (this.value.length >= 9) {
+            $('#parrafo').html('Máximo 9 dígitos');
+            return false;
+        }else{
+            if(this.value.length < 9){
+                $('#parrafo').html('');
+                return true;
+            }
+        }
+    });
 
     valor = $('#valor_form').val();
     if(valor == 1){

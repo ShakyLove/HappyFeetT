@@ -8,7 +8,11 @@
         if(empty($_POST['proveedor']) || empty($_POST['contacto']) || empty($_POST['telefono']) || empty($_POST['direccion'])){
 
             $alert = 1;
-        }else{
+        }elseif(is_numeric($_POST['contacto'])){
+            $alert = 5;
+            $text = 'No se permiten números en el nombre de contacto';
+        }
+        else{
 
             $proveedor = $_POST['proveedor'];
             $contacto = $_POST['contacto'];
@@ -46,17 +50,28 @@
             <?php  isset($alert) ? $alert: ''; ?>
             <form action="" method="POST">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
-                <label for="proveedor">Proveedor</label>
-                <input type="text" name="proveedor" placeholder="Nombre del proveedor" id="proveedor">
+                <input type="hidden" id="text" value="<?php echo $text; ?>">
 
-                <label for="contacto">Contacto</label>
-                <input type="text" name="contacto" placeholder="Nombre completo del contacto" id="contacto">
+                <div class="label">
+                    <label for="proveedor">Proveedor</label>
+                    <input type="text" name="proveedor" placeholder="Nombre del proveedor" id="proveedor">
+                </div>
 
-                <label for="telefono">Telefono</label>
-                <input type="number" name="telefono" placeholder="Numero de telefono" id="telefono">
+                <div class="label">
+                    <label for="contacto">Contacto</label>
+                    <input type="text" name="contacto" placeholder="Nombre completo del contacto" id="contacto">
+                </div>
 
-                <label for="direccion">Direccion</label>
-                <input type="text" name="direccion" placeholder="Direccion completa" id="direccion">
+                <div class="label">
+                    <label for="telefono">Teléfono</label>
+                    <input type="number" name="telefono" placeholder="Numero de teléfono" id="telefono">
+                </div>
+                <p id="parrafo" style="text-align: end; color: red;"></p>
+
+                <div class="label">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" name="direccion" placeholder="Dirección completa" id="direccion">
+                </div>
 
                 <input type="submit" class="btn-save" value="Guardar Proveedor">
                 <a href="listar_proveedor.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
@@ -77,6 +92,19 @@
         }
         ubicacionPrincipal = desplazamiento;
     }
+    
+    $('input#telefono').keypress(function(event){
+    
+        if (this.value.length >= 11) {
+        $('#parrafo').html('Máximo 11 dígitos');
+        return false;
+    }else{
+        if(this.value.length <= 10){
+            $('#parrafo').html('');
+            return true;
+        }
+    }
+    });
 
     valor = $('#valor_form').val();
     if(valor == 1){
@@ -123,9 +151,26 @@
                         $(location).attr('href',url);
                     } 
                 });
+            }else{
+                if(valor == 5){
+
+                    Swal.fire({
+                    title: 'Error al agregar proveedor',
+                    icon: 'error',
+                    text: $('#text').val(),
+                    confirmButtonText: `Aceptar`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {                
+                    
+                            $('#valor_form').val('0');
+                        } 
+                    });
+                }
             }
         }
     }
+
 </script>
 </body>
 </html>

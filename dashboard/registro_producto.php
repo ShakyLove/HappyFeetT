@@ -1,118 +1,138 @@
 <?php
-    session_start();
-    include "../bd/conn.php";
+session_start();
+include "../bd/conn.php";
 
-    if(!empty($_POST)){
+if (!empty($_POST)) {
 
-        $alert = '';
-        if(empty($_POST['proveedor']) || empty($_POST['producto']) || empty($_POST['precio']) || empty($_POST['cantidad']) || empty($_POST['categoria'])){
+    $alert = '';
+    if (empty($_POST['proveedor']) || empty($_POST['producto']) || empty($_POST['precio']) || empty($_POST['cantidad']) || empty($_POST['categoria'])) {
 
-            $alert = 1;
-        }else{
+        $alert = 1;
+    } elseif (is_numeric($_POST['producto'])) {
+        $alert = 5;
+        $text = 'No se permiten números en el nombre del producto';
+    } else {
 
-            $proveedor = $_POST['proveedor'];
-            $producto = $_POST['producto'];
-            $precio = $_POST['precio'];
-            $cantidad = $_POST['cantidad'];
-            $categoria = $_POST['categoria'];
-            $usuario_id = $_SESSION['codigo'];
+        $proveedor = $_POST['proveedor'];
+        $producto = $_POST['producto'];
+        $precio = $_POST['precio'];
+        $cantidad = $_POST['cantidad'];
+        $categoria = $_POST['categoria'];
+        $usuario_id = $_SESSION['codigo'];
 
-            $foto = $_FILES['foto'];
-            $nombre_foto = $foto['name'];
-            $type = $foto['type'];
-            $url_temp = $foto['tmp_name'];
-            $imgProducto = 'img_producto.png';
+        $foto = $_FILES['foto'];
+        $nombre_foto = $foto['name'];
+        $type = $foto['type'];
+        $url_temp = $foto['tmp_name'];
+        $imgProducto = 'img_producto.png';
 
-            if($nombre_foto != ''){
+        if ($nombre_foto != '') {
 
-                $destino = 'img/uploads/';
-                $img_nombre = 'img_'.md5(date('d-m-Y H:m:s'));
-                $imgProducto = $img_nombre.'.jpg';
-                $src = $destino.$imgProducto;
-            }
+            $destino = 'img/uploads/';
+            $img_nombre = 'img_' . md5(date('d-m-Y H:m:s'));
+            $imgProducto = $img_nombre . '.jpg';
+            $src = $destino . $imgProducto;
+        }
 
-            $query_insert = mysqli_query($conn, "INSERT INTO productos(proveedor, descripcion, precio, existencia, usuario_id, foto, category) 
+        $query_insert = mysqli_query($conn, "INSERT INTO productos(proveedor, descripcion, precio, existencia, usuario_id, foto, category) 
                                                             VALUES('$proveedor', '$producto', '$precio', '$cantidad', '$usuario_id','$imgProducto', '$categoria')");
 
-            if($query_insert){
-                if($nombre_foto != ''){
-                    move_uploaded_file($url_temp,$src);
-                }
-                $alert = 2;
-            }else{
-
-                $alert = 3;
+        if ($query_insert) {
+            if ($nombre_foto != '') {
+                move_uploaded_file($url_temp, $src);
             }
+            $alert = 2;
+        } else {
+
+            $alert = 3;
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<?php include "includes/scripts.php"; ?>
-	<title>Registro de Producto</title>
+    <meta charset="UTF-8">
+    <?php include "includes/scripts.php"; ?>
+    <title>Registro de Producto</title>
 </head>
+
 <body>
-	<?php include "includes/header.php" ?>
+    <?php include "includes/header.php" ?>
     <section id="container">
-        <div class="form_register">
+        <div class="form_register" style="width: 900px;">
             <h1><i class="fas fa-archive"></i> Registro Producto</h1>
             <hr>
             <div class="alert"></div>
-            <?php  isset($alert) ? $alert: ''; ?>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <?php isset($alert) ? $alert : ''; ?>
+            <form action="" method="POST" enctype="multipart/form-data" style="display: flex;">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
-                <label for="proveedor">Proveedor</label>
-                <?php
-                    $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
-                    $resultado = mysqli_num_rows($query_proveedor);
-                ?>
-                <select name="proveedor" id="proveedor">
-                <?php 
-                    if($resultado > 0){
-                        while($row = mysqli_fetch_array($query_proveedor)){
+                <input type="hidden" id="text" value="<?php echo $text; ?>">
+                <div style="width: 50%; margin: 0 20px; margin-top: 30px;">
+                    <div class="label">
+                        <label for="proveedor">Proveedor</label>
+                        <?php
+                        $query_proveedor = mysqli_query($conn, "SELECT nit_proveedor, proveedor FROM proveedor WHERE estatus = 1 ORDER BY proveedor ASC");
+                        $resultado = mysqli_num_rows($query_proveedor);
+                        ?>
+                        <select name="proveedor" id="proveedor">
+                            <?php
+                            if ($resultado > 0) {
+                                while ($row = mysqli_fetch_array($query_proveedor)) {
 
-                ?>
-                    <option value="<?php echo $row['nit_proveedor']; ?>"><?php echo $row['proveedor']; ?></option>
+                            ?>
+                                    <option value="<?php echo $row['nit_proveedor']; ?>"><?php echo $row['proveedor']; ?></option>
 
-                <?php
-                        }
-                    }
-                ?>
-                </select>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
 
-                <label for="producto">Producto</label>
-                <input type="text" name="producto" placeholder="Nombre del producto" id="producto">
+                    <div class="label">
+                        <label for="producto">Producto</label>
+                        <input type="text" name="producto" placeholder="Nombre del producto" id="producto">
+                    </div>
 
-                <label for="precio">Precio</label>
-                <input type="number" name="precio" placeholder="Precio del producto" id="precio">
+                    <div class="label">
+                        <label for="precio">Precio</label>
+                        <input type="number" name="precio" placeholder="Precio del producto" id="precio">
+                    </div>
+                    <p id="parrafo" style="text-align: end; color: red;"></p>
 
-                <label for="cantidad">Cantidad</label>
-                <input type="number" name="cantidad" placeholder="Cantidad del producto" id="cantidad">
+                    <div class="label">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" name="cantidad" placeholder="Cantidad del producto" id="cantidad">
+                    </div>
+                    <p id="parrafo_cant" style="text-align: end; color: red;"></p>
 
-                <label for="categoria">Categoria</label>
-                <?php
-                    $query_categoria = mysqli_query($conn, "SELECT * FROM categorias WHERE estatus = 1 ORDER BY descripcion ASC");
-                    $resultado = mysqli_num_rows($query_categoria);
-                ?>
-                <select name="categoria" id="categoria">
-                <?php 
-                    if($resultado > 0){
-                        while($row = mysqli_fetch_array($query_categoria)){
+                    <div class="label">
+                        <label for="categoria">Categoría</label>
+                        <?php
+                        $query_categoria = mysqli_query($conn, "SELECT * FROM categorias WHERE estatus = 1 ORDER BY descripcion ASC");
+                        $resultado = mysqli_num_rows($query_categoria);
+                        ?>
+                        <select name="categoria" id="categoria">
+                            <?php
+                            if ($resultado > 0) {
+                                while ($row = mysqli_fetch_array($query_categoria)) {
 
-                ?>
-                    <option value="<?php echo $row['categoria_id']; ?>"><?php echo $row['descripcion']; ?></option>
+                            ?>
+                                    <option value="<?php echo $row['categoria_id']; ?>"><?php echo $row['descripcion']; ?></option>
 
-                <?php
-                        }
-                    }
-                ?>
-                </select>
-
-                <div class="photo">
-                    <label for="foto">Foto</label>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div style="width: 50%;">
+                    <div class="photo">
+                        <label for="foto">Foto</label>
                         <div class="prevPhoto">
                             <span class="delPhoto notBlock">X</span>
                             <label for="foto"></label>
@@ -121,76 +141,117 @@
                             <input type="file" name="foto" id="foto">
                         </div>
                         <div id="form_alert"></div>
+                    </div>
+                    <input type="submit" class="btn-save" value="Guardar Producto">
+                    <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                    border-radius: 5px; background: black; color: white; display: inline-block; text-align: center;">Cancelar</a>
                 </div>
-
-                <input type="submit" class="btn-save" value="Guardar Producto">
-                <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
-                border-radius: 5px; background: black; color: white; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
     </section>
-<script type="text/javascript">
-    let ubicacionPrincipal = window.pageYOffset;
-    window.onscroll = function Scroll(){
-        let desplazamiento = window.pageYOffset;
-        if(desplazamiento == 0){
-            document.getElementById('navegacion').style.display = 'block';
-            document.getElementById('header').style.background = 'initial';
-        }else{
-            document.getElementById('navegacion').style.display = 'none';
-            document.getElementById('header').style.background = 'white';
+    <script type="text/javascript">
+        let ubicacionPrincipal = window.pageYOffset;
+        window.onscroll = function Scroll() {
+            let desplazamiento = window.pageYOffset;
+            if (desplazamiento == 0) {
+                document.getElementById('navegacion').style.display = 'block';
+                document.getElementById('header').style.background = 'initial';
+            } else {
+                document.getElementById('navegacion').style.display = 'none';
+                document.getElementById('header').style.background = 'white';
+            }
+            ubicacionPrincipal = desplazamiento;
         }
-        ubicacionPrincipal = desplazamiento;
-    }
 
-    valor = $('#valor_form').val();
-    if(valor == 1){
-
-        Swal.fire({
-            title: 'Todos los campos son obligatorios',
-            icon: 'error',
-            confirmButtonText: `Aceptar`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {                
-                
-                $('#valor_form').val('0');
-                
-            } 
+        $('input#cantidad').keyup(function(event) {
+            if (this.value.length >= 4) {
+                $('#parrafo_cant').html('Máximo 3 dígitos');
+                this.value = this.value.slice(0, 3);
+                return false;
+            } else {
+                if (this.value.length < 3) {
+                    $('#parrafo_cant').html('');
+                    return true;
+                }
+            }
         });
-    }else{
-        if(valor == 2){
 
-            Swal.fire({
-                title: 'Producto registrado con éxito',
-                icon: 'success',
-                confirmButtonText: `Aceptar`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                                
-                    var url = 'listar_productos.php';
-                    $(location).attr('href',url);
-                } 
-            });
-        }else{
-            if(valor == 3){
+        $('input#precio').keypress(function(event) {
 
+            if (this.value.length >= 9) {
+                $('#parrafo').html('Máximo 9 dígitos');
+                return false;
+            } else {
+                if (this.value.length < 9) {
+                    $('#parrafo').html('');
+                    return true;
+                }
+            }
+        });
+
+        valor = $('#valor_form').val();
+
+        let responseCode = {
+            1: () => {
+                Swal.fire({
+                    title: 'Todos los campos son obligatorios',
+                    icon: 'error',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+
+                        $('#valor_form').val('0');
+
+                    }
+                });
+            },
+            2: () => {
+                Swal.fire({
+                    title: 'Producto registrado con éxito',
+                    icon: 'success',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+
+                        var url = 'listar_productos.php';
+                        $(location).attr('href', url);
+                    }
+                });
+            },
+            3: () => {
                 Swal.fire({
                     title: 'Error al agregar producto',
                     icon: 'error',
                     confirmButtonText: `Aceptar`,
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {                
-                
+                    if (result.isConfirmed) {
+
                         var url = 'listar_productos.php';
-                        $(location).attr('href',url);
-                    } 
+                        $(location).attr('href', url);
+                    }
+                });
+            },
+            5: () => {
+                Swal.fire({
+                    title: 'Error al agregar producto',
+                    icon: 'error',
+                    text: $('#text').val(),
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+
+                        $('#valor_form').val('0');
+                    }
                 });
             }
         }
-    }
-</script>
+
+        valor in responseCode && responseCode[valor]();
+    </script>
 </body>
+
 </html>

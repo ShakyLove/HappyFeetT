@@ -1,28 +1,28 @@
-<?php 
+<?php
 
 session_start();
-if(!empty($_SESSION['active'])){
+if (!empty($_SESSION['active'])) {
 
     header('location: dashboard/');
-}else{
+} else {
 
-    if(!empty($_POST)){
-        if(empty($_POST['usuario']) || empty($_POST['contraseña'])){
+    if (!empty($_POST)) {
+        if (empty($_POST['usuario']) || empty($_POST['contraseña'])) {
 
             $_SESSION['message'] = 'Digite su usuario y contraseña';
             $_SESSION['message_type'] = 'danger';
-        }else{
+        } else {
 
-            require_once"./bd/conn.php";
+            require_once "./bd/conn.php";
             $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
             $contraseña = md5(mysqli_real_escape_string($conn, $_POST['contraseña']));
 
-            $query = mysqli_query($conn, "SELECT u.codigo, u.nombre, u.usuario, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
+            $query = mysqli_query($conn, "SELECT u.codigo, u.nombre, u.usuario, u.correo, u.contraseña, u.rol as id_rol, r.rol FROM usuarios u INNER JOIN rol r
                                                         WHERE (u.usuario = '$usuario' AND u.contraseña = '$contraseña') AND estatus = 1");
             mysqli_close($conn);
             $resultado = mysqli_num_rows($query);
 
-            if($resultado > 0){
+            if ($resultado > 0) {
 
                 $row = mysqli_fetch_array($query);
                 $_SESSION['active'] = true;
@@ -35,7 +35,7 @@ if(!empty($_SESSION['active'])){
                 $_SESSION['namerol'] = $row['rol'];
 
                 header('location: dashboard/');
-            }else{
+            } else {
                 $_SESSION['message'] = 'El usuario o contraseña son incorrectos';
                 $_SESSION['message_type'] = 'danger';
                 session_destroy();
@@ -46,6 +46,7 @@ if(!empty($_SESSION['active'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,6 +59,7 @@ if(!empty($_SESSION['active'])){
     <link rel="stylesheet" href="./css/login/login.css">
     <link rel="stylesheet" href="./dashboard/SweetAlert/dist/sweetalert2.min.css">
 </head>
+
 <body>
     <div class="container mt-5 shadow con">
         <div class="row align-items-stretch">
@@ -69,13 +71,13 @@ if(!empty($_SESSION['active'])){
                     <img src="./img/logo.png" width="100px" height="100px" alt="">
                 </div>
                 <h2 class="text-center py-4">Bienvenidos</h2>
-                <?php if(isset($_SESSION['message'])){ ?>
+                <?php if (isset($_SESSION['message'])) { ?>
                     <div class="alert alert-<?= $_SESSION['message_type']; ?> alert-dismissible fade show col-md-8 mx-auto" role="alert">
-                    <?= $_SESSION['message'] ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <?= $_SESSION['message'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php  } ?>
-                <form action="" method="POST" >
+                <form action="" method="POST">
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="user" class="form-label">Usuario</label>
                         <input type="text" class="form-control" name="usuario" autofocus>
@@ -98,12 +100,13 @@ if(!empty($_SESSION['active'])){
             </div>
         </div>
     </div>
-<!--script -->
+    <!--script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
     <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="./dashboard/SweetAlert/dist/sweetalert2.all.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>    
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
+
 </html>

@@ -74,18 +74,27 @@
             <form action="" method="POST">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <input type="hidden" name="nit_proveedor" value="<?php echo $nit; ?>">
-                <label for="proveedor">Proveedor</label>
-                <input type="text" name="proveedor" placeholder="Nombre del proveedor" id="proveedor" value="<?php echo $proveedor; ?>">
 
-                <label for="contacto">Contacto</label>
-                <input type="text" name="contacto" placeholder="Nombre completo del contacto" id="contacto" value="<?php echo $contacto; ?>">
+                <div class="label">
+                    <label for="proveedor">Proveedor</label>
+                    <input type="text" name="proveedor" placeholder="Nombre del proveedor" id="proveedor" value="<?php echo $proveedor; ?>">
+                </div>
 
-                <label for="telefono">Telefono</label>
-                <input type="number" name="telefono" placeholder="Numero de telefono" id="telefono" value="<?php echo $telefono; ?>">
+                <div class="label">
+                    <label for="contacto">Contacto</label>
+                    <input type="text" name="contacto" placeholder="Nombre completo del contacto" id="contacto" value="<?php echo $contacto; ?>">
+                </div>
 
-                <label for="direccion">Direccion</label>
-                <input type="text" name="direccion" placeholder="Direccion completa" id="direccion" value="<?php echo $direccion; ?>">
+                <div class="label">
+                    <label for="telefono">Telefono</label>
+                    <input type="number" name="telefono" placeholder="Numero de telefono" id="telefono" value="<?php echo $telefono; ?>">
+                </div>
+                <p id="parrafo" style="text-align: end; color: red;"></p>
 
+                <div class="label">
+                    <label for="direccion">Direccion</label>
+                    <input type="text" name="direccion" placeholder="Direccion completa" id="direccion" value="<?php echo $direccion; ?>">
+                </div>
                 <input type="submit" class="btn-save" value="Actualizar Proveedor">
                 <a href="listar_proveedor.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
                 border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
@@ -105,6 +114,19 @@
         }
         ubicacionPrincipal = desplazamiento;
     }
+
+    $('input#telefono').keypress(function(event){
+    
+        if (this.value.length >= 11) {
+        $('#parrafo').html('Máximo 11 dígitos');
+        return false;
+    }else{
+        if(this.value.length <= 10){
+            $('#parrafo').html('');
+            return true;
+        }
+    }
+    });
 
     valor = $('#valor_form').val();
     if(valor == 1){

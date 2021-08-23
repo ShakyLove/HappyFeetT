@@ -15,7 +15,7 @@
 				<?php }else{ ?>
 				<span class="user"><?php echo $_SESSION['user']; ?> | Administrador</span>
 				<?php } ?>
-				<img class="photouser" src="img/usuario.png" alt="Usuario">
+				<a href="#" onclick="openModal();"><img class="photouser" src="img/usuario.png" alt="Usuario"></a>
 				<a href="./php/salir.php"><img class="close" src="img/salir.png" alt="Salir del sistema" title="Salir"></a>
 			</div>
 		</div>

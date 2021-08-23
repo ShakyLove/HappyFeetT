@@ -97,11 +97,18 @@ if(empty($_REQUEST['cod'])){
             </div>
 
                 <input type="hidden" name="codigo_prod" value="<?php echo $cod; ?>">
-                <label for="cantidad">Cantidad</label>
-                <input type="number" name="cantidad" placeholder="Cantidad del producto" id="cantidad">
+
+                <div class="label">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" name="cantidad" placeholder="Cantidad del producto" id="cantidad">
+                </div>
+                <p id="parrafo_cant" style="text-align: end; color: red;"></p>
                 
-                <label for="precio">Precio</label>
-                <input type="text" name="precio" placeholder="Precio del producto" id="precio">
+                <div class="label">
+                    <label for="precio">Precio</label>
+                    <input type="text" name="precio" placeholder="Precio del producto" id="precio">
+                </div>
+                <p id="parrafo" style="text-align: end; color: red;"></p>
 
                 <input type="submit" class="btn-save" value="Agregar Producto">
                 <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
@@ -122,6 +129,32 @@ if(empty($_REQUEST['cod'])){
         }
         ubicacionPrincipal = desplazamiento;
     }
+
+    $('input#cantidad').keypress(function(event){
+    
+            if (this.value.length >= 3) {
+            $('#parrafo_cant').html('Máximo 3 dígitos');
+            return false;
+        }else{
+            if(this.value.length < 3){
+                $('#parrafo_cant').html('');
+                return true;
+            }
+        }
+        });
+
+        $('input#precio').keypress(function(event){
+
+            if (this.value.length >= 9) {
+            $('#parrafo').html('Máximo 9 dígitos');
+            return false;
+        }else{
+            if(this.value.length < 9){
+                $('#parrafo').html('');
+                return true;
+            }
+        }
+    });
 
     valor = $('#valor_form').val();
     unidad = $('#cantidad').val();

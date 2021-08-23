@@ -1,62 +1,55 @@
-<?php 
+<?php
 
-    include "./bd/conn.php";
+include "./bd/conn.php";
 
-    if(!empty($_POST)){
+if (!empty($_POST)) {
 
-        $valida = '';
-        $alert = 0;
-        if(empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['usuario']) || empty($_POST['contraseña'])){
+    $valida = '';
+    $alert = 0;
 
-            $_SESSION['message'] = 'Por favor digite los campos';
+    if (empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['usuario']) || empty($_POST['contraseña'])) {
+        $_SESSION['message'] = 'Por favor digite los campos';
+        $_SESSION['message_type'] = 'danger';
+        $alert = 2;
+    } elseif (strlen($_POST['nombre']) <= 5  || is_numeric($_POST['nombre'])) {
+        $_SESSION['message'] = 'El nombre es incorrecto';
+        $_SESSION['message_type'] = 'danger';
+        $valida = 'border: 1px solid red';
+    } elseif (!filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['message'] = 'El correo es incorrecto';
+        $_SESSION['message_type'] = 'danger';
+        $valida = 'border: 1px solid red';
+    } else {
+        $nombre = $_POST['nombre'];
+        $correo = $_POST['correo'];
+        $usuario = $_POST['usuario'];
+        $contraseña = md5($_POST['contraseña']);
+        $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE usuario = '$usuario' OR correo = '$correo'");
+        $resultado = mysqli_fetch_array($query);
+
+        if ($resultado > 0) {
+            $_SESSION['message'] = 'El correo o el usuario ya existe';
             $_SESSION['message_type'] = 'danger';
-            $alert = 2;
-        }elseif(strlen($_POST['nombre']) <= 5  || is_numeric($_POST['nombre'])){
+        } else {
+            $query_insert = mysqli_query($conn, "INSERT INTO usuarios(nombre, correo, usuario, contraseña, rol) VALUES('$nombre', '$correo', '$usuario', '$contraseña', 2)");
 
-            $_SESSION['message'] = 'El nombre es incorrecto';
-            $_SESSION['message_type'] = 'danger';
-            $valida = 'border: 1px solid red';
-        }elseif(!filter_var($_POST['correo'], FILTER_VALIDATE_EMAIL)){
-
-            $_SESSION['message'] = 'El correo es incorrecto';
-            $_SESSION['message_type'] = 'danger';
-            $valida = 'border: 1px solid red';
-        }else{
-
-            $nombre = $_POST['nombre'];
-            $correo = $_POST['correo'];
-            $usuario = $_POST['usuario'];
-            $contraseña = md5($_POST['contraseña']);
-
-            $query = mysqli_query($conn, "SELECT * FROM usuarios WHERE usuario = '$usuario' OR correo = '$correo'");
-            $resultado = mysqli_fetch_array($query);
-
-            if($resultado > 0){
-
-                $_SESSION['message'] = 'El correo o el usuario ya existe';
+            if ($query_insert) {
+                header('location: login.php');
+                $_SESSION['message'] = 'Cuenta creada con exito';
+                $_SESSION['message_type'] = 'success';
+                $alert = 1;
+            } else {
+                $_SESSION['message'] = 'Error al crear usuario, intente de nuevo';
                 $_SESSION['message_type'] = 'danger';
-            }else{
-
-                $query_insert = mysqli_query($conn, "INSERT INTO usuarios(nombre, correo, usuario, contraseña, rol) VALUES('$nombre', '$correo', '$usuario', '$contraseña', 2)");
-
-                if($query_insert){
-                    
-                    header('location: login.php');
-                    $_SESSION['message'] = 'Cuenta creada con exito';
-                    $_SESSION['message_type'] = 'success';
-                    $alert = 1;
-                }else{
-
-                    $_SESSION['message'] = 'Error al crear usuario, intente de nuevo';
-                    $_SESSION['message_type'] = 'danger';
-                }
             }
         }
     }
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,6 +64,7 @@
     <link rel="stylesheet" href="./dashboard/SweetAlert/dist/sweetalert2.min.css">
     <script src="https://kit.fontawesome.com/998bc0c7f1.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="container mt-5 shadow con">
         <div class="row align-items-stretch">
@@ -79,30 +73,30 @@
             </div>
             <div class="col box-form rounded-end">
                 <h2 class="text-center py-2">Registro</h2>
-                <?php if(isset($_SESSION['message'])){ ?>
+                <?php if (isset($_SESSION['message'])) { ?>
                     <div class="alert alert-<?= $_SESSION['message_type']; ?> alert-dismissible fade show col-md-8 mx-auto" role="alert">
-                    <?= $_SESSION['message'] ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <?= $_SESSION['message'] ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php  } ?>
-                <?php  isset($alert) ? $alert: ''; ?>
-                <form action="" method="POST" >
+                <?php isset($alert) ? $alert : ''; ?>
+                <form action="" method="POST">
                     <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="name" class="form-label">Nombre</label>
-                        <input style="<?php echo $valida; ?>" type="text" class="form-control" name="nombre" autofocus value="<?php if(isset($_POST['nombre'])) echo $_POST['nombre']; ?>">
+                        <input style="<?php echo $valida; ?>" type="text" class="form-control" name="nombre" autofocus value="<?php if (isset($_POST['nombre'])) echo $_POST['nombre']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="correo" autofocus value="<?php if(isset($_POST['correo'])) echo $_POST['correo']; ?>">
+                        <input type="email" class="form-control" name="correo" autofocus value="<?php if (isset($_POST['correo'])) echo $_POST['correo']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="user" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" name="usuario" autofocus value="<?php if(isset($_POST['usuario'])) echo $_POST['usuario']; ?>">
+                        <input type="text" class="form-control" name="usuario" autofocus value="<?php if (isset($_POST['usuario'])) echo $_POST['usuario']; ?>">
                     </div>
                     <div class="mb-2 col-md-8 mx-auto">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" name="contraseña" value="<?php if(isset($_POST['contraseña'])) echo $_POST['contraseña']; ?>">
+                        <input type="password" class="form-control" name="contraseña" value="<?php if (isset($_POST['contraseña'])) echo $_POST['contraseña']; ?>">
                     </div>
                     <div class="d-grid col-md-8 ingresa mx-auto mb-2">
                         <input type="submit" class="btn btn-primary" value="Registrarse" name="registrar">
@@ -119,33 +113,33 @@
             </div>
         </div>
     </div>
-<!--script -->
+    <!--script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
     <script src="jquery/jquery-3.3.1.min.js"></script>
     <script src="./dashboard/SweetAlert/dist/sweetalert2.all.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script> 
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        valor = $('#valor_form').val();
+        if (valor == 1) {
 
-    valor = $('#valor_form').val();
-    if(valor == 1){
+            Swal.fire({
+                title: 'Usuario creado con éxito',
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
 
-        Swal.fire({
-            title: 'Usuario creado con éxito',
-            icon: 'success',
-            confirmButtonText: `Aceptar`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {                
-                
-                var url = 'login.php';
-                $(location).attr('href',url);
-                
-            } 
-        });
-    }
-</script>
+                    var url = 'login.php';
+                    $(location).attr('href', url);
+
+                }
+            });
+        }
+    </script>
 </body>
+
 </html>

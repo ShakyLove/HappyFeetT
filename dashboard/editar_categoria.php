@@ -176,7 +176,7 @@
             </div>
         </div>
 
-        <div class="form_register" style="margin-top: 30px;">
+        <div class="form_register" style="margin-top: 30px; width: 450px;">
             <h1> Actualizar Categoría</h1>
             <hr>
             <div class="alert"></div>

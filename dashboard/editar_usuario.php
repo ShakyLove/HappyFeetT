@@ -113,26 +113,37 @@
             <form action="" method="POST">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" placeholder="Nombre completo" id="nombre" value="<?php echo $nombre; ?>">
 
-                <label for="correo">Correo Electronico</label>
-                <input type="email" name="correo" placeholder="Correo Electronico" id="correo" value="<?php echo $correo; ?>">
+                <div class="label">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" placeholder="Nombre completo" id="nombre" value="<?php echo $nombre; ?>">
+                </div>
+                
+                <div class="label">
+                    <label for="correo">Correo Electrónico</label>
+                    <input type="email" name="correo" placeholder="Correo Electrónico" id="correo" value="<?php echo $correo; ?>">
+                </div>
 
-                <label for="usuario">Usuario</label>
-                <input type="text" name="usuario" placeholder="Nombre de usuario" id="usuario" value="<?php echo $usuario; ?>">
+                <div class="label">
+                    <label for="usuario">Usuario</label>
+                    <input type="text" name="usuario" placeholder="Nombre de usuario" id="usuario" value="<?php echo $usuario; ?>">
+                </div>
 
-                <label for="contraseña">Contraseña</label>
-                <input type="password" name="contraseña" placeholder="Contraseña" id="contraseña">
+                <div class="label">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" name="contraseña" placeholder="Contraseña" id="contraseña">
+                </div>
 
-                <label for="rol">Tipo Usuario</label>
-                <select name="rol" id="rol" class="notItemOne">
-                <?php 
-                    echo $option;
-                ?>
-                    <option value="1">Administrador</option>
-                    <option value="2">Empleado</option>
-                </select>
+                <div class="label">
+                    <label for="rol">Tipo Usuario</label>
+                    <select name="rol" id="rol" class="notItemOne">
+                    <?php 
+                        echo $option;
+                    ?>
+                        <option value="1">Administrador</option>
+                        <option value="2">Empleado</option>
+                    </select>
+                </div>
 
                 <input type="submit" class="btn-save" value="Actualizar Usuario">
                 <a href="listar_usuarios.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 

@@ -38,8 +38,8 @@
             <table class="tbl-venta">
                 <thead>
                     <tr>
-                        <th width="100px">Codigo</th>
-                        <th>Descripcion</th>
+                        <th width="200px">Código de producto</th>
+                        <th>Descripción</th>
                         <th>Existencia</th>
                         <th width="100px">Cantidad</th>
                         <th class="textright">Precio</th>
@@ -47,7 +47,7 @@
                         <th>Acción</th>
                     </tr>
                     <tr>
-                        <td><input type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
+                        <td><input type="text" name="txt_cod_producto" id="txt_cod_producto" placeholder="Ejemplo: 20" autofocus></td>
                         <td id="txt_descripcion">-</td>
                         <td id="txt_existencia">-</td>
                         <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
@@ -98,6 +98,19 @@
         }
         ubicacionPrincipal = desplazamiento;
     }
+
+    $('input#txt_cant_producto').keypress(function(event){
+    
+        if (this.value.length >= 3) {
+        $('#parrafo_cant').html('Máximo 3 dígitos');
+        return false;
+    }else{
+        if(this.value.length < 3){
+            $('#parrafo_cant').html('');
+            return true;
+        }
+    }
+    });
     </script>
     
 </body>

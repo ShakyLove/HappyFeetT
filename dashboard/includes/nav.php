@@ -7,7 +7,6 @@
 				<li class="principal">
 					<a href="listar_usuarios.php"><i class="fas fa-users"></i> Usuarios</a>
 					<ul>
-						<li><a href="#" onclick="openModal();">Perfil de Usuario</a></li>
 						<li><a href="registro_usuario.php">Nuevo usuario</a></li>
 						<li><a href="listar_usuarios.php">Lista de Usuarios</a></li>
 					</ul>
@@ -16,7 +15,6 @@
 				<li class="principal">
 					<a href="listar_usuarios.php"><i class="fas fa-users"></i> Usuarios</a>
 					<ul>
-						<li><a href="#" onclick="openModal();">Perfil de Usuario</a></li>
 						<li><a href="listar_usuarios.php">Lista de Usuarios</a></li>
 					</ul>
 				</li>

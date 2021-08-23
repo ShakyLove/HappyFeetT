@@ -1,17 +1,17 @@
 <?php
 	session_start();
-	include "../bd/conn.php";
+	include "../../bd/conn.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<?php include "includes/scripts.php"; ?>
-	<link rel="stylesheet" href="./css/style2.css">
+	<?php include "../includes/scripts.php"; ?>
+	<link rel="stylesheet" href="../css/style2.css">
 	<title>Happy Feet T.</title>
 </head>
 <body>
-	<?php include "includes/header.php" ?>
+	<?php include "../includes/header.php" ?>
 	<section id="container">
 		<div class="cont-1">
 			<div class="inicio1">
@@ -19,32 +19,32 @@
 				<div class="cont-card">
 
 					<div class="card">
-						<a href="./listar_usuarios.php"><img src="./img/inicio/usuarios.png"></a>
+						<a href="./listar_usuarios.php"><img src="../img/inicio/usuarios.png"></a>
 						<h4>Usuarios</h4>
 					</div>
 
 					<div class="card">
-						<a href="./listar_productos.php"><img width="100%" src="./img/inicio/producto.png"></a>
+						<a href="./listar_productos.php"><img width="100%" src="../img/inicio/producto.png"></a>
 						<h4>Productos</h4>
 					</div>
 
 					<div class="card">
-						<a href="listar_categoria.php"><img src="./img/inicio/categorias1.png"></a>
+						<a href="listar_categoria.php"><img src="../img/inicio/categorias1.png"></a>
 						<h4>Categorias</h4>
 					</div>
 
 					<div class="card">
-						<a href="./listar_proveedor.php"><img src="./img/inicio/proveedor.png"></a>
+						<a href="./listar_proveedor.php"><img src="../img/inicio/proveedor.png"></a>
 						<h4>Proveedores</h4>
 					</div>
 
 					<div class="card">
-						<a href="listar_entradas.php"><img src="./img/inicio/entrada.png"></a>
+						<a href="listar_entradas.php"><img src="../img/inicio/entrada.png"></a>
 						<h4>Entradas</h4>
 					</div>
 
 					<div class="card">
-						<a href="listar_salidas.php"><img src="./img/inicio/ventas.png"></a>
+						<a href="listar_salidas.php"><img src="../img/inicio/ventas.png"></a>
 						<h4>Salidas</h4>
 					</div>
 				</div>
@@ -147,10 +147,10 @@
 											
 											if($row['foto'] != 'img_producto.png'){
 
-												$foto = 'img/uploads/'.$row['foto'];
+												$foto = '../img/uploads/'.$row['foto'];
 											}else{
 				
-												$foto = 'img/'.$row['foto'];
+												$foto = '../img/'.$row['foto'];
 											}
 									?>
 
