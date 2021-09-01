@@ -59,4 +59,3 @@ while($row = mysqli_fetch_array($query)){
 }
 
 $pdf->Output();
-?>

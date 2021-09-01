@@ -160,6 +160,23 @@ if (!empty($_POST)) {
 
                         }
                     });
+                } else {
+                    if (valor == 2) {
+
+                        Swal.fire({
+                            title: 'Error en el registro',
+                            icon: 'error',
+                            text: 'El correo o usuario ya se encuentran registrados',
+                            confirmButtonText: `Aceptar`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+
+                                $('#valor_form').val('0');
+
+                            }
+                        });
+                    }
                 }
             }
         }
