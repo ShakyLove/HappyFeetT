@@ -110,7 +110,7 @@ if ($result_sql == 0) {
             <hr>
             <div class="alert"></div>
             <?php isset($alert) ? $alert : ''; ?>
-            <form action="" method="POST">
+            <form action="" method="POST" class="animate__animated animate__fadeInLeft">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <input type="hidden" name="codigo" value="<?php echo $codigo; ?>">
 
@@ -145,8 +145,8 @@ if ($result_sql == 0) {
                     </select>
                 </div>
 
-                <input type="submit" class="btn-save" value="Actualizar Usuario">
-                <a href="listar_usuarios.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                <input type="submit" class="btn-save" value="Actualizar Usuario" id="saveForm">
+                <a id="cancel" href="#" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
                 border-radius: 5px; background: black; color:white; display: inline-block; text-align: center;">Cancelar</a>
             </form>
         </div>
@@ -166,52 +166,83 @@ if ($result_sql == 0) {
         }
 
         valor = $('#valor_form').val();
-        if (valor == 1) {
+        $('#saveForm').click(function(e) {
 
-            Swal.fire({
-                title: 'Todos los campos son obligatorios',
-                icon: 'error',
-                confirmButtonText: `Aceptar`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-
-                    $('#valor_form').val('0');
-
-                }
-            });
-        } else {
-            if (valor == 3) {
-
+            if ($('#nombre').val() == '' || $('#correo').val() == '' || $('#usuario').val() == '') {
+                e.preventDefault();
                 Swal.fire({
-                    title: 'Usuario modificado con éxito',
-                    icon: 'success',
+                    title: 'Todos los campos son obligatorios',
+                    icon: 'error',
                     confirmButtonText: `Aceptar`,
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
+                        $('#valor_form').val('0');
+                    }
+                });
+            } else if ($.isNumeric($('#nombre').val())) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Error al actualizar',
+                    icon: 'error',
+                    text: 'No se permiten números en el campo "Nombre"',
+                    confirmButtonText: `Aceptar`,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        $('#valor_form').val('0');
+                    }
+                });
+            }
+        });
 
+        $('#cancel').click(function(e) {
+
+            if ($('#nombre').val() != '' || $('#correo').val() != '' || $('#usuario').val() != '' || $('#contraseña').val() != '') {
+                Swal.fire({
+                    title: '¿Está seguro de cancelar la actualización?',
+                    icon: 'warning',
+                    confirmButtonText: `Aceptar`,
+                    showCancelButton: true,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
                         var url = 'listar_usuarios.php';
                         $(location).attr('href', url);
                     }
                 });
             } else {
-                if (valor == 4) {
-
-                    Swal.fire({
-                        title: 'Error al modificar usuario',
-                        icon: 'error',
-                        confirmButtonText: `Aceptar`,
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-
-                            var url = 'listar_proveedor.php';
-                            $(location).attr('href', url);
-                        }
-                    });
-                }
+                var url = 'listar_usuarios.php';
+                $(location).attr('href', url);
             }
+        })
+
+        if (valor == 3) {
+
+            Swal.fire({
+                title: 'Datos de usuario actualizados',
+                icon: 'success',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    var url = 'listar_usuarios.php';
+                    $(location).attr('href', url);
+                }
+            });
+        } else if (valor == 2) {
+
+            Swal.fire({
+                title: 'Error en el registro',
+                icon: 'error',
+                text: 'El correo o usuario ya se encuentran registrados',
+                confirmButtonText: `Aceptar`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $('#valor_form').val('0');
+                }
+            });
         }
     </script>
 </body>

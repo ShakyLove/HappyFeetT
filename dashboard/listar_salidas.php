@@ -38,7 +38,7 @@ include "../bd/conn.php";
                 </div>
             </div>
             <div class="table">
-                <table class="table-salidas">
+                <table class="table-salidas animate__animated animate__fadeInUp">
                     <tr>
                         <th class="titulo-pro">No.</th>
                         <th class="titulo-pro">Fecha</th>

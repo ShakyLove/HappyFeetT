@@ -1,21 +1,23 @@
 <?php
-    session_start();
-    include "../bd/conn.php";
+session_start();
+include "../bd/conn.php";
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<?php include "includes/scripts.php"; ?>
-	<title>Registro de Salida</title>
+    <meta charset="UTF-8">
+    <?php include "includes/scripts.php"; ?>
+    <title>Registro de Salida</title>
 </head>
+
 <body>
-	<?php include "includes/header.php" ?>
+    <?php include "includes/header.php" ?>
     <section id="container">
         <div class="cont-saldias" style="margin-top: 20px;">
             <div class="title-page">
-                <h1><i class="fas fa-dolly"></i> Nueva Salida</h1>            
+                <h1><i class="fas fa-dolly"></i> Nueva Salida</h1>
             </div>
 
             <div class="datos-venta">
@@ -28,14 +30,14 @@
                     <div class="wd50">
                         <label>Acciones</label>
                         <div id="acciones_venta">
-                        <a href="#" class="btn-addVnta closeModal" id="btn_anular_venta" onclick="closeModal();">Anular</a>
-                        <a style="display: none;" href="#" class="btn-add closeModal" id="btn_facturar_venta" onclick="closeModal();">Procesar</a>
+                            <a href="#" class="btn-addVnta closeModal" id="btn_anular_venta" onclick="closeModal();">Anular</a>
+                            <a style="display: none;" href="#" class="btn-add closeModal" id="btn_facturar_venta" onclick="closeModal();">Procesar</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <table class="tbl-venta">
+            <table class="tbl-venta animate__animated animate__fadeInUp">
                 <thead>
                     <tr>
                         <th width="200px">Código de producto</th>
@@ -69,11 +71,11 @@
                     </tr>
                 </thead>
                 <tbody id="detalle_venta">
-                    
+
                 </tbody>
-                
+
                 <tfoot id="detalle_totales">
-                    
+
                 </tfoot>
             </table>
 
@@ -81,37 +83,38 @@
     </section>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function() {
             var usuarioid = '<?php echo $_SESSION['codigo']; ?>';
             searchForDetalle(usuarioid);
         });
 
         let ubicacionPrincipal = window.pageYOffset;
-        window.onscroll = function Scroll(){
-        let desplazamiento = window.pageYOffset;
-        if(desplazamiento == 0){
-            document.getElementById('navegacion').style.display = 'block';
-            document.getElementById('header').style.background = 'initial';
-        }else{
-            document.getElementById('navegacion').style.display = 'none';
-            document.getElementById('header').style.background = 'white';
+        window.onscroll = function Scroll() {
+            let desplazamiento = window.pageYOffset;
+            if (desplazamiento == 0) {
+                document.getElementById('navegacion').style.display = 'block';
+                document.getElementById('header').style.background = 'initial';
+            } else {
+                document.getElementById('navegacion').style.display = 'none';
+                document.getElementById('header').style.background = 'white';
+            }
+            ubicacionPrincipal = desplazamiento;
         }
-        ubicacionPrincipal = desplazamiento;
-    }
 
-    $('input#txt_cant_producto').keypress(function(event){
-    
-        if (this.value.length >= 3) {
-        $('#parrafo_cant').html('Máximo 3 dígitos');
-        return false;
-    }else{
-        if(this.value.length < 3){
-            $('#parrafo_cant').html('');
-            return true;
-        }
-    }
-    });
+        $('input#txt_cant_producto').keypress(function(event) {
+
+            if (this.value.length >= 3) {
+                $('#parrafo_cant').html('Máximo 3 dígitos');
+                return false;
+            } else {
+                if (this.value.length < 3) {
+                    $('#parrafo_cant').html('');
+                    return true;
+                }
+            }
+        });
     </script>
-    
+
 </body>
+
 </html>

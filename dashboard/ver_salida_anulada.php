@@ -23,7 +23,7 @@ if (empty($_REQUEST['id_sal'])) {
     <section id="container">
         <div class="tabla-usuario">
             <h1><i class="fas fa-people-carry"></i> Detalle de salida <?php echo $id_sal ?> </h1>
-            <img style="position: absolute; width: 70%; margin-left: 15%;" src="img/inicio/anulado.png" alt="">
+            <img style="position: absolute; width: 70%; margin-left: 15%;" src="img/inicio/anulado.png" alt="" class="animate__animated animate__bounceInDown">
             <div class="table">
                 <table>
                     <tr>

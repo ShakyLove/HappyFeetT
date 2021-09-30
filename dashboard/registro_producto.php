@@ -67,7 +67,7 @@ if (!empty($_POST)) {
             <hr>
             <div class="alert"></div>
             <?php isset($alert) ? $alert : ''; ?>
-            <form action="" method="POST" enctype="multipart/form-data" style="display: flex;">
+            <form action="" method="POST" enctype="multipart/form-data" style="display: flex;" class="animate__animated animate__fadeInLeft">
                 <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
                 <input type="hidden" id="text" value="<?php echo $text; ?>">
                 <div style="width: 50%; margin: 0 20px; margin-top: 30px;">
@@ -142,8 +142,8 @@ if (!empty($_POST)) {
                         </div>
                         <div id="form_alert"></div>
                     </div>
-                    <input type="submit" class="btn-save" value="Guardar Producto">
-                    <a href="listar_productos.php" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
+                    <input type="submit" class="btn-save" value="Guardar Producto" id="saveForm">
+                    <a id="cancel" href="#" class="btn-save closeForm" style="width: 100%; margin-top: 1px; 
                     border-radius: 5px; background: black; color: white; display: inline-block; text-align: center;">Cancelar</a>
                 </div>
             </form>
@@ -191,8 +191,10 @@ if (!empty($_POST)) {
 
         valor = $('#valor_form').val();
 
-        let responseCode = {
-            1: () => {
+        $('#saveForm').click(function(e) {
+
+            if ($('#proveedor').val() == '' || $('#producto').val() == '' || $('#precio').val() == '' || $('#cantidad').val() == '' || $('#categoria').val() == '') {
+                e.preventDefault();
                 Swal.fire({
                     title: 'Todos los campos son obligatorios',
                     icon: 'error',
@@ -200,12 +202,34 @@ if (!empty($_POST)) {
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
-
                         $('#valor_form').val('0');
-
                     }
                 });
-            },
+            }
+        });
+
+        $('#cancel').click(function(e) {
+
+            if ($('#proveedor').val() != '' || $('#producto').val() != '' || $('#precio').val() != '' || $('#cantidad').val() != '' || $('#categoria').val() != '') {
+                Swal.fire({
+                    title: '¿Está seguro de cancelar el registro?',
+                    icon: 'warning',
+                    confirmButtonText: `Aceptar`,
+                    showCancelButton: true,
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+                        var url = 'listar_productos.php';
+                        $(location).attr('href', url);
+                    }
+                });
+            } else {
+                var url = 'listar_productos.php';
+                $(location).attr('href', url);
+            }
+        })
+
+        let responseCode = {
             2: () => {
                 Swal.fire({
                     title: 'Producto registrado con éxito',
@@ -231,20 +255,6 @@ if (!empty($_POST)) {
 
                         var url = 'listar_productos.php';
                         $(location).attr('href', url);
-                    }
-                });
-            },
-            5: () => {
-                Swal.fire({
-                    title: 'Error al agregar producto',
-                    icon: 'error',
-                    text: $('#text').val(),
-                    confirmButtonText: `Aceptar`,
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-
-                        $('#valor_form').val('0');
                     }
                 });
             }

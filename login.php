@@ -90,7 +90,7 @@ if (!empty($_SESSION['active'])) {
                         <input type="submit" class="btn btn-primary" value="Iniciar Sesión" name="ingresar">
                     </div>
                     <div class="d-grid col-md-8 boton mx-auto mb-2">
-                        <a href="index.php" class="btn btn-dark" role="button">volver</a>
+                        <a href="index/index.html" class="btn btn-dark" role="button">volver</a>
                     </div>
                     <div class="my-3 link col-md-8 mx-auto text-center">
                         <span>No tienes cuenta? <a href="./register.php">Resgistrate</a></span><br>

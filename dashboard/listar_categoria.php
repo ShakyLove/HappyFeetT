@@ -1,79 +1,79 @@
 <?php
-        session_start();
+session_start();
 
-    include "../bd/conn.php";
-    
-    if(!empty($_POST)){
+include "../bd/conn.php";
 
-        $alert = '';
-        if(empty($_POST['nombre'])){
+if (!empty($_POST)) {
 
-            $alert = 1;
-        }else{
+    $alert = '';
+    if (empty($_POST['nombre'])) {
 
-            $nombre = $_POST['nombre'];
-            $usuario = $_SESSION['codigo'];
+        $alert = 1;
+    } else {
 
-            $query_insert = mysqli_query($conn, "INSERT INTO categorias(descripcion, usuario_id) VALUES('$nombre', '$usuario')");
+        $nombre = $_POST['nombre'];
+        $usuario = $_SESSION['codigo'];
 
-            if($query_insert ){
+        $query_insert = mysqli_query($conn, "INSERT INTO categorias(descripcion, usuario_id) VALUES('$nombre', '$usuario')");
 
-                $alert = 2;
-                
-            }else{
+        if ($query_insert) {
 
-                $alert = 3;
-            }
+            $alert = 2;
+        } else {
+
+            $alert = 3;
         }
-
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<?php include "includes/scripts.php"; ?>
-	<title>Lista de Categorías</title>
+    <meta charset="UTF-8">
+    <?php include "includes/scripts.php"; ?>
+    <title>Lista de Categorías</title>
 </head>
+
 <body>
-	<?php include "includes/header.php" ?>
+    <?php include "includes/header.php" ?>
     <section id="container">
-    <div class="cont-categoria" style="display: flex; width: 100%; height: 100%; justify-content: center;">
-    
-        <div class="tabla-usuario" style="width: 60%; margin-top: 30px">
-            <h1><i class="fas fa-clipboard-check"></i> Lista de Categorías</h1>
-            <div class="botones" style="width: 95%; justify-content: flex-end;">
-                <div class="botones-2" style="width: 50%; ">
+        <div class="cont-categoria" style="display: flex; width: 100%; height: 100%; justify-content: center;">
+
+            <div class="tabla-usuario" style="width: 60%; margin-top: 30px">
+                <h1><i class="fas fa-clipboard-check"></i> Lista de Categorías</h1>
+                <div class="botones" style="width: 95%; justify-content: flex-end;">
+                    <div class="botones-2" style="width: 50%; ">
                         <form action="buscar_categoria.php" method="get" class="form-search" style="width: 100%;">
                             <input type="text" name="busqueda" id="busqueda" placeholder="Buscar" class="barra-search">
                             <input type="submit" value="Buscar" class="btn-search">
                         </form>
+                    </div>
                 </div>
-            </div>
-            <div class="table">
-                <table class="table-categoria">
-                    <tr>
-                        <th style="text-align: center; width: 10%;">ID</th>
-                        <th style="width: 50%;">Descripción</th>
-                        <th style="width: 20%;">Usuario</th>
-                        <th style="text-align: center; width: 20%">Acciones</th>
-                    </tr>
-                    <?php
+                <div class="table">
+                    <table class="table-categoria animate__animated animate__fadeInUp">
+                        <tr>
+                            <th style="text-align: center; width: 10%;">ID</th>
+                            <th style="width: 50%;">Descripción</th>
+                            <th style="width: 20%;">Usuario</th>
+                            <th style="text-align: center; width: 20%">Acciones</th>
+                        </tr>
+                        <?php
 
                         //paginador
                         $sql_registe = mysqli_query($conn, "SELECT COUNT(*) as total_registro FROM categorias WHERE estatus = 1");
                         $row_registe = mysqli_fetch_array($sql_registe);
                         $total_registro = $row_registe['total_registro'];
 
-                        $por_pagina = 6 ;
+                        $por_pagina = 6;
 
-                        if(empty($_GET['pagina'])){
+                        if (empty($_GET['pagina'])) {
                             $pagina = 1;
-                        }else{
+                        } else {
                             $pagina = $_GET['pagina'];
                         }
 
-                        $desde = ($pagina - 1 ) * $por_pagina;
+                        $desde = ($pagina - 1) * $por_pagina;
                         $total_paginas = ceil($total_registro / $por_pagina);
 
                         $query = mysqli_query($conn, "SELECT c.categoria_id, c.descripcion, u.usuario 
@@ -84,151 +84,152 @@
                         mysqli_close($conn);
 
                         $resltado = mysqli_num_rows($query);
-                        if($resltado > 0){
+                        if ($resltado > 0) {
 
-                            while($row = mysqli_fetch_array($query)){
+                            while ($row = mysqli_fetch_array($query)) {
 
                                 $nombre_c = $row['descripcion'];
 
-                    ?>
-                            <?php 
-                            $clase = 0;
-                            if($_SESSION['rol'] == 1){ 
-                                $clase = 1;
-                            }else{ 
-                                $clase = 1;
-                            } 
-                            ?>
-                                <tr class="rol-<?php echo $clase ?>">
-                                <td style="text-align: center;"><?php echo $row['categoria_id']; ?></td>
-                                <td><?php echo $row['descripcion']; ?></td>
-                                <td><?php echo $row['usuario']; ?></td>
-                                <td style="text-align: center;" class="acc">
-                                    <a class="link_edit" href="editar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-
-                                    <a class="link_delete" href="eliminar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                <?php } ?>
-                                </td>
-                                <?php } ?>
-                            </tr>
-                    <?php
-                            
-                        
-                    ?>
-                </table>
-            </div>
-            <div class="paginador_pr">
-                <div class="paginador">
-                        <ul>
-                        <?php
-                            if($pagina != 1){
-
-                            
                         ?>
-                            <li><a href="?pagina=<?php echo 1; ?>"><i class="fas fa-step-backward"></i></a></li>
-                            <li><a href="?pagina=<?php echo $pagina - 1 ?>"><i class="fas fa-backward"></i></a></li>
-                    <?php
-                        }
-                        for ($i=1; $i <= $total_paginas; $i++){
-                            if($i == $pagina){
+                                <?php
+                                $clase = 0;
+                                if ($_SESSION['rol'] == 1) {
+                                    $clase = 1;
+                                } else {
+                                    $clase = 1;
+                                }
+                                ?>
+                                <tr class="rol-<?php echo $clase ?>">
+                                    <td style="text-align: center;"><?php echo $row['categoria_id']; ?></td>
+                                    <td><?php echo $row['descripcion']; ?></td>
+                                    <td><?php echo $row['usuario']; ?></td>
+                                    <td style="text-align: center;" class="acc">
+                                        <a class="link_edit" href="editar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
 
-                                echo '<li class="pageSelected">'.$i.'</li>';
-                            }else{                                
-                                echo '<li><a href="?pagina='.$i.'">'.$i.'</a></li>';
+                                        <a class="link_delete" href="eliminar_categoria.php?id_categoria=<?php echo $row['categoria_id']; ?>">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    <?php } ?>
+                                    </td>
+                                <?php } ?>
+                                </tr>
+                                <?php
+
+
+                                ?>
+                    </table>
+                </div>
+                <div class="paginador_pr">
+                    <div class="paginador">
+                        <ul>
+                            <?php
+                            if ($pagina != 1) {
+
+
+                            ?>
+                                <li><a href="?pagina=<?php echo 1; ?>"><i class="fas fa-step-backward"></i></a></li>
+                                <li><a href="?pagina=<?php echo $pagina - 1 ?>"><i class="fas fa-backward"></i></a></li>
+                            <?php
                             }
-                        }
-                        if($pagina != $total_paginas){
-                        
-                    ?>
-                            <li><a href="?pagina=<?php echo $pagina + 1 ?>"><i class="fas fa-forward"></i></a></li>
-                            <li><a href="?pagina=<?php echo $total_paginas ?>"><i class="fas fa-step-forward"></i></a></li>
-                    <?php } ?>
+                            for ($i = 1; $i <= $total_paginas; $i++) {
+                                if ($i == $pagina) {
+
+                                    echo '<li class="pageSelected">' . $i . '</li>';
+                                } else {
+                                    echo '<li><a href="?pagina=' . $i . '">' . $i . '</a></li>';
+                                }
+                            }
+                            if ($pagina != $total_paginas) {
+
+                            ?>
+                                <li><a href="?pagina=<?php echo $pagina + 1 ?>"><i class="fas fa-forward"></i></a></li>
+                                <li><a href="?pagina=<?php echo $total_paginas ?>"><i class="fas fa-step-forward"></i></a></li>
+                            <?php } ?>
                         </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form_register" style="margin-top: 30px; width: 450px;">
-            <h1> Agregar Categoría</h1>
-            <hr>
-            <div class="alert"></div>
-            <?php isset($alert) ? $alert: ''; ?>
-            <form action="" method="POST">
-                <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
-                <label for="nombre">Categoría</label>
-                <input type="text" name="nombre" placeholder="Tipo de categoría" id="nombre">
+            <div class="form_register" style="margin-top: 30px; width: 450px;">
+                <h1> Agregar Categoría</h1>
+                <hr>
+                <div class="alert"></div>
+                <?php isset($alert) ? $alert : ''; ?>
+                <form action="" method="POST" class="animate__animated animate__fadeInUp">
+                    <input type="hidden" id="valor_form" value="<?php echo $alert; ?>">
+                    <label for="nombre">Categoría</label>
+                    <input type="text" name="nombre" placeholder="Tipo de categoría" id="nombre">
 
-                <input type="submit" class="btn-save" value="Agregar Categoría">
-            </form>
+                    <input type="submit" class="btn-save" value="Agregar Categoría">
+                </form>
+            </div>
         </div>
-    </div>
     </section>
-<script type="text/javascript">
-    let ubicacionPrincipal = window.pageYOffset;
-    window.onscroll = function Scroll(){
-        let desplazamiento = window.pageYOffset;
-        if(desplazamiento == 0){
-            document.getElementById('navegacion').style.display = 'block';
-            document.getElementById('header').style.background = 'initial';
-        }else{
-            document.getElementById('navegacion').style.display = 'none';
-            document.getElementById('header').style.background = 'white';
+    <script type="text/javascript">
+        let ubicacionPrincipal = window.pageYOffset;
+        window.onscroll = function Scroll() {
+            let desplazamiento = window.pageYOffset;
+            if (desplazamiento == 0) {
+                document.getElementById('navegacion').style.display = 'block';
+                document.getElementById('header').style.background = 'initial';
+            } else {
+                document.getElementById('navegacion').style.display = 'none';
+                document.getElementById('header').style.background = 'white';
+            }
+            ubicacionPrincipal = desplazamiento;
         }
-        ubicacionPrincipal = desplazamiento;
-    }
 
-    valor = $('#valor_form').val();
-    if(valor == 1){
-
-        Swal.fire({
-            title: 'Llenar el campo',
-            icon: 'error',
-            confirmButtonText: `Aceptar`,
-        }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {                
-                
-                $('#valor_form').val('0');
-                
-            } 
-        });
-    }else{
-        if(valor == 2){
+        valor = $('#valor_form').val();
+        if (valor == 1) {
 
             Swal.fire({
-                title: 'Categoría agregada',
-                icon: 'success',
+                title: 'Llenar el campo',
+                icon: 'error',
                 confirmButtonText: `Aceptar`,
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                                
-                    var url = 'listar_categoria.php';
-                    $(location).attr('href',url);
-                } 
+
+                    $('#valor_form').val('0');
+
+                }
             });
-        }else{
-            if(valor == 3){
+        } else {
+            if (valor == 2) {
 
                 Swal.fire({
-                    title: 'Error al agregar categoría',
-                    icon: 'error',
+                    title: 'Categoría agregada',
+                    icon: 'success',
                     confirmButtonText: `Aceptar`,
                 }).then((result) => {
                     /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {                
-                
-                        var url = 'listar_productos.php';
-                        $(location).attr('href',url);
-                    } 
+                    if (result.isConfirmed) {
+
+                        var url = 'listar_categoria.php';
+                        $(location).attr('href', url);
+                    }
                 });
+            } else {
+                if (valor == 3) {
+
+                    Swal.fire({
+                        title: 'Error al agregar categoría',
+                        icon: 'error',
+                        confirmButtonText: `Aceptar`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+
+                            var url = 'listar_productos.php';
+                            $(location).attr('href', url);
+                        }
+                    });
+                }
             }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
